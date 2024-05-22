@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Restaurant" ADD COLUMN     "description" TEXT NOT NULL DEFAULT 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, unde iusto mollitia non aliquam praesentium. Ut saepe quod dolorum ullam delectus blanditiis nesciunt iusto, voluptates ex magnam porro iste debitis harum nam tenetur eum quas unde quo? Amet a quos vitae optio doloremque sequi ea est quae, esse rem enim?';
