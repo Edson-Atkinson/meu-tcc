@@ -46,6 +46,7 @@ model User {
   accounts            Account[]
   sessions            Session[]
   orders              Order[]
+  adresses            Address[]
   favoriteRestaurants UserFavoriteRestaurant[]
 
   @@map("users")
@@ -66,7 +67,7 @@ model Restaurant {
   imageUrl            String
   deliveryFee         Decimal                  @db.Decimal(10, 2)
   deliveryTimeMinutes Int
-  description         String                    @default("Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, unde iusto mollitia non aliquam praesentium. Ut saepe quod dolorum ullam delectus blanditiis nesciunt iusto, voluptates ex magnam porro iste debitis harum nam tenetur eum quas unde quo? Amet a quos vitae optio doloremque sequi ea est quae, esse rem enim?")
+  description         String                   @default("Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, unde iusto mollitia non aliquam praesentium. Ut saepe quod dolorum ullam delectus blanditiis nesciunt iusto, voluptates ex magnam porro iste debitis harum nam tenetur eum quas unde quo? Amet a quos vitae optio doloremque sequi ea est quae, esse rem enim?")
   categories          Category[]
   products            Product[]
   orders              Order[]
@@ -80,7 +81,7 @@ model UserFavoriteRestaurant {
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   createdAt    DateTime   @default(now())
 
-   @@id([userId, restaurantId])
+  @@id([userId, restaurantId])
 }
 
 model Category {
@@ -130,6 +131,8 @@ model Order {
   totalDiscounts      Decimal        @db.Decimal(10, 2)
   createdAt           DateTime       @default(now())
   status              OrderStatus
+  address             Address        @relation(fields: [addressId], references: [id])
+  addressId           String         @unique
 }
 
 enum OrderStatus {
@@ -138,4 +141,18 @@ enum OrderStatus {
   PREPARING
   DELIVERING
   COMPLETED
+}
+
+model Address {
+  id           String  @id @default(uuid())
+  cep          String
+  street       String
+  number       Int
+  neighborhood String
+  city         String
+  state        String
+  complement   String?
+  user         User?   @relation(fields: [userId], references: [id])
+  userId       String?
+  order        Order?
 }
