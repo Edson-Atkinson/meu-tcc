@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "./_context/cart";
 import AuthProvider from "./_providers/auth";
 import { Toaster } from "@/app/_components/ui/sonner";
+import { Provider as AppContextProvider } from "@/app/_context/address";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,7 +25,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <AuthProvider>
-          <CartProvider>{children}</CartProvider>
+          <CartProvider>
+            <AppContextProvider>{children}</AppContextProvider>
+          </CartProvider>
         </AuthProvider>
 
         <Toaster richColors />

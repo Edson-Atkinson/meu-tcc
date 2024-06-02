@@ -9,7 +9,7 @@ import { Button } from "./ui/button";
 import { createOrder } from "../_actions/order";
 import { OrderStatus } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { Loader2 } from "lucide-react";
+import { Loader2, MapPin } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,6 +22,8 @@ import {
 } from "./ui/alert-dialog";
 import { toast } from "sonner";
 import { usePathname, useRouter } from "next/navigation";
+import { useAppContext } from "../_context/address";
+import Link from "next/link";
 
 interface CartProps {
   // eslint-disable-next-line no-unused-vars
@@ -40,6 +42,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
   const { products, subtotalPrice, totalPrice, totalDiscounts, clearCart } =
     useContext(CartContext);
 
+  const { shippingAddress } = useAppContext();
   const handleFinishOrderClick = async () => {
     if (!data?.user) return;
 
@@ -68,6 +71,9 @@ const Cart = ({ setIsOpen }: CartProps) => {
               quantity: product.quantity,
             })),
           },
+        },
+        address: {
+          connect: { id: shippingAddress?.id },
         },
       });
 
@@ -103,6 +109,24 @@ const Cart = ({ setIsOpen }: CartProps) => {
               ))}
             </div>
 
+            <Separator />
+            {/* Area de endereços */}
+            <h2 className="text-lg font-medium ">Endereço de entrega</h2>
+            <div className="py-4 hover:bg-muted">
+              <Link
+                href="/my-adresses"
+                className="flex items-center justify-between gap-2"
+              >
+                <div className="text-primary">
+                  <MapPin size={24} />
+                </div>
+                <p className="line-clamp-1 text-base">
+                  {shippingAddress
+                    ? `${shippingAddress.street}, ${shippingAddress.number} - ${shippingAddress.city} - ${shippingAddress.state}`
+                    : `Escolha um endereço`}
+                </p>
+              </Link>
+            </div>
             {/* TOTAIS */}
             <div className="mt-6">
               <Card>
