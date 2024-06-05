@@ -1,8 +1,8 @@
 import { getServerSession } from "next-auth";
-import { db } from "../_lib/prisma";
-import { authOptions } from "../_lib/auth";
+import { db } from "../../_lib/prisma";
+import { authOptions } from "../../_lib/auth";
 import { redirect } from "next/navigation";
-import Header from "../_components/header";
+import Header from "../../_components/header";
 import OrderItem from "./_components/order-item";
 
 const MyOrdersPage = async () => {

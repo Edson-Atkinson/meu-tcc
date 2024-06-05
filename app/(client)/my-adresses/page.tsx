@@ -1,11 +1,11 @@
 import { getServerSession } from "next-auth";
 import React from "react";
-import { authOptions } from "../_lib/auth";
+import { authOptions } from "../../_lib/auth";
 import { notFound } from "next/navigation";
-import { db } from "../_lib/prisma";
+import { db } from "../../_lib/prisma";
 import AddressItem from "./_components/address-item";
-import Header from "../_components/header";
-import { Button } from "../_components/ui/button";
+import Header from "../../_components/header";
+import { Button } from "../../_components/ui/button";
 import Link from "next/link";
 
 const MyAdressesPage = async () => {
