@@ -7,15 +7,15 @@ import NewCategoryItem from "./_components/NewCategoryItem";
 
 interface CategoryRestaurantPageProps {
   params: {
-    id: string;
+    slug: string;
   };
 }
 const CategoryRestaurantPage = async ({
-  params: { id },
+  params: { slug },
 }: CategoryRestaurantPageProps) => {
   const restaurantCategories = await db.restaurant.findUnique({
     where: {
-      id,
+      slug,
     },
     include: {
       categories: true,
@@ -27,7 +27,7 @@ const CategoryRestaurantPage = async ({
       <div>{restaurantCategories?.name}</div>
       <div className="flex items-center justify-between">
         <h2>Categorias</h2>
-        <NewCategoryItem restaurantId={id} />
+        <NewCategoryItem restaurantSlug={slug} />
       </div>
       <div className="mt-10 gap-4 lg:grid lg:grid-cols-3">
         {restaurantCategories?.categories.map((item, index) => (

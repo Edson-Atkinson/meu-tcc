@@ -64,6 +64,7 @@ model VerificationToken {
 model Restaurant {
   id                  String                   @id @default(uuid())
   name                String
+  slug                String                   @unique
   imageUrl            String
   deliveryFee         Decimal                  @db.Decimal(10, 2)
   deliveryTimeMinutes Int
@@ -154,5 +155,5 @@ model Address {
   complement   String?
   user         User?   @relation(fields: [userId], references: [id])
   userId       String?
-   order Order[]
+  order        Order[]
 }

@@ -4,15 +4,15 @@ import React from "react";
 
 interface RestaurantControlPageProps {
   params: {
-    id: string;
+    slug: string;
   };
 }
 const RestaurantControlPage = async ({
-  params: { id },
+  params: { slug },
 }: RestaurantControlPageProps) => {
   const restaurant = await db.restaurant.findUnique({
     where: {
-      id,
+      slug,
     },
     include: {
       categories: {
@@ -21,9 +21,6 @@ const RestaurantControlPage = async ({
         },
         include: {
           products: {
-            where: {
-              restaurantId: id,
-            },
             include: {
               restaurant: {
                 select: {

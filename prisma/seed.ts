@@ -20,6 +20,7 @@ const createBurguers = async (
   const burguerRestaurants = [
     {
       name: "The Burguer King",
+      slug: "the-burguer-king",
       imageUrl:
         "https://utfs.io/f/020e448e-a7d8-433f-9622-cb3b68f34d48-p3apya.png",
       deliveryFee: 5,
@@ -32,6 +33,7 @@ const createBurguers = async (
     },
     {
       name: "Omni Burguer",
+      slug: "omni-burguer",
       imageUrl:
         "https://utfs.io/f/d0c54665-78d0-41af-98a4-8d1f459c622c-p3apy9.png",
       deliveryFee: 5,
@@ -44,6 +46,7 @@ const createBurguers = async (
     },
     {
       name: "The Burguer Queen",
+      slug: "the-burguer-queen",
       imageUrl:
         "https://utfs.io/f/d9834f2e-bc37-4c64-981b-cabf03018322-p3apy8.png",
       deliveryFee: 0,
@@ -56,6 +59,7 @@ const createBurguers = async (
     },
     {
       name: "Burguer House",
+      slug: "burguer-house",
       imageUrl:
         "https://utfs.io/f/9c193fc1-9dcb-4394-8be4-d783266134dc-p3apy7.png",
       deliveryFee: 10,
@@ -214,6 +218,7 @@ const createPizzas = async (
   const pizzaRestaurants = [
     {
       name: "Pizza Hut",
+      slug: "pizza-hut",
       imageUrl:
         "https://utfs.io/f/f50301c9-7968-4d76-b4a3-b8ed24e2089c-5p2j0.png",
       deliveryFee: 5,
@@ -226,6 +231,7 @@ const createPizzas = async (
     },
     {
       name: "Omni Pizza",
+      slug: "omni-pizza",
       imageUrl:
         "https://utfs.io/f/8a9eb9dc-6434-4246-91c9-1c0a60a6e5f0-5p2j1.png",
       deliveryFee: 5,
@@ -238,6 +244,7 @@ const createPizzas = async (
     },
     {
       name: "The Pizza Queen",
+      slug: "the-pizza-queen",
       imageUrl:
         "https://utfs.io/f/e83dc871-19e3-4d39-8163-fb2f1e24b6b1-5p2j2.png",
       deliveryFee: 0,
@@ -250,6 +257,7 @@ const createPizzas = async (
     },
     {
       name: "Pizza House",
+      slug: "pizza-house",
       imageUrl:
         "https://utfs.io/f/a73ec63a-7fc8-4a23-8d03-62debee79e6a-5p2j3.png",
       deliveryFee: 10,
@@ -390,6 +398,7 @@ const createJapanese = async (
   const japaneseRestaurants = [
     {
       name: "Sushi House",
+      slug: "sushi-house",
       imageUrl:
         "https://utfs.io/f/7f52b936-9f7a-40cc-b22f-b62727ddb9cc-fu3r05.png",
       deliveryFee: 5,
@@ -402,6 +411,7 @@ const createJapanese = async (
     },
     {
       name: "Omni Sushi",
+      slug: "omni-sushi",
       imageUrl:
         "https://utfs.io/f/f809b477-7cf1-47f5-8664-0a4566225867-fu3r06.png",
       deliveryFee: 5,
@@ -414,6 +424,7 @@ const createJapanese = async (
     },
     {
       name: "The Sushi Queen",
+      slug: "the-sushi-queen",
       imageUrl:
         "https://utfs.io/f/42bb722a-0b76-40e8-8251-cee9093bed38-fu3r07.png",
       deliveryFee: 0,
@@ -425,7 +436,8 @@ const createJapanese = async (
       },
     },
     {
-      name: "Sushi House",
+      name: "Sushi Restaurant",
+      slug: "sushi-restaurant",
       imageUrl:
         "https://utfs.io/f/de37be82-23bf-4901-aeea-b93c281bf401-fu3r08.png",
       deliveryFee: 10,
@@ -584,6 +596,7 @@ const createBrazilian = async (
   const brazilianRestaurants = [
     {
       name: "Churrascaria House",
+      slug: "churrascaria-house",
       imageUrl:
         "https://utfs.io/f/5a090f6e-520f-418a-a42a-043b512314a2-n9n78u.png",
       deliveryFee: 5,
@@ -596,6 +609,7 @@ const createBrazilian = async (
     },
     {
       name: "Omni Churrascaria",
+      slug: "omni-churrascaria",
       imageUrl:
         "https://utfs.io/f/87338583-660e-47f1-a80d-6ea804298bd5-n9n78v.png",
       deliveryFee: 5,
@@ -608,6 +622,7 @@ const createBrazilian = async (
     },
     {
       name: "The Churrascaria Queen",
+      slug: "the-churrascaria-queen",
       imageUrl:
         "https://utfs.io/f/b26b00ca-5041-46cb-9b68-a1856ed064ad-n9n78w.png",
       deliveryFee: 0,
@@ -619,7 +634,8 @@ const createBrazilian = async (
       },
     },
     {
-      name: "Churrascaria House",
+      name: "The best Churrascaria",
+      slug: "the-best-churrascaria",
       imageUrl:
         "https://utfs.io/f/c1f279ea-ac09-4e4f-9757-30018cb4c7bc-n9n78x.png",
       deliveryFee: 10,

@@ -20,21 +20,21 @@ import { createCategoryItem } from "../_action/createCategoryItem";
 import { Prisma } from "@prisma/client";
 
 type RestaurantProps = {
-  restaurantId: string;
+  restaurantSlug: string;
 };
-const NewCategoryItem = ({ restaurantId }: RestaurantProps) => {
+const NewCategoryItem = ({ restaurantSlug }: RestaurantProps) => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const router = useRouter();
 
-  const handleAddCategory = async ({ restaurantId }: RestaurantProps) => {
+  const handleAddCategory = async ({ restaurantSlug }: RestaurantProps) => {
     try {
-      await createCategoryItem(restaurantId, {
+      await createCategoryItem(restaurantSlug, {
         name: name,
         imageUrl: image,
         restaurants: {
-          connect: { id: restaurantId },
+          connect: { slug: restaurantSlug },
         },
       });
       setName("");
@@ -89,7 +89,7 @@ const NewCategoryItem = ({ restaurantId }: RestaurantProps) => {
                 Fechar
               </Button>
             </DialogClose>
-            <Button onClick={() => handleAddCategory({ restaurantId })}>
+            <Button onClick={() => handleAddCategory({ restaurantSlug })}>
               Adicionar
             </Button>
           </DialogFooter>
