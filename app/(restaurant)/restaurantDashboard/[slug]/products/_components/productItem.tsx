@@ -111,7 +111,7 @@ const RestaurantProductItem = ({ product }: ProductItemProps) => {
         </div>
       </div>
       <AlertDialog open={alertDeleteDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="w-[96%] rounded-lg">
           <AlertDialogHeader>
             <AlertDialogTitle>
               Você deseja mesmo deletar esse produto?
@@ -136,7 +136,7 @@ const RestaurantProductItem = ({ product }: ProductItemProps) => {
       </AlertDialog>
 
       <AlertDialog open={alertEditDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="w-[96%] rounded-lg">
           <AlertDialogHeader>
             <AlertDialogTitle>
               Você deseja mesmo editar esse produto?

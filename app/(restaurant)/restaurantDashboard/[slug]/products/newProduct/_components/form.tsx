@@ -61,6 +61,7 @@ const Form = (
       console.error(error);
     } finally {
       toast.success("Produto adicionado com sucesso!");
+      router.refresh();
     }
   };
 

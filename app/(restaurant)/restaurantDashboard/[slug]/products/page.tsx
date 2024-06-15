@@ -23,17 +23,17 @@ const RestaurantProductPage = async ({
           category: true,
           restaurant: true,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
       },
     },
   });
   return (
     <div>
-      <div>
+      <div className="w-full px-4">
         <div className="flex items-center justify-between">
-          <h2 className="py-4 text-2xl font-semibold">
-            Produtos do restaurante{" "}
-            <span className="text-primary"> {products?.name}</span>
-          </h2>
+          <h2 className="py-4 text-2xl font-semibold">Meus produtos</h2>
           <Link href={`/restaurantDashboard/${slug}/products/newProduct`}>
             <Button>
               <Plus size={24} />
@@ -41,7 +41,7 @@ const RestaurantProductPage = async ({
           </Link>
         </div>
 
-        <div className="grid grid-cols-6 gap-4">
+        <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
           {products?.products.map((item, index) => (
             <RestaurantProductItem key={index} product={item} />
           ))}
