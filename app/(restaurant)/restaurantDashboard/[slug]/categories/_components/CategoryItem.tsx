@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { Category, Prisma } from "@prisma/client";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Prisma } from "@prisma/client";
+import { Pencil, Trash2 } from "lucide-react";
 import { deleteCategoryItem } from "../_action/deleteCategoryItem";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -15,19 +15,15 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/app/_components/ui/alert-dialog";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/app/_components/ui/dialog";
-import { getCategoryItem } from "../_action/getCategoryItem";
 import { updateCategoryItem } from "../_action/updateCategoryItem";
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
@@ -43,8 +39,6 @@ const CategoryItem = ({ category }: CategoryListProps) => {
   const [name, setName] = useState(category.name);
   const [image, setImage] = useState(category.imageUrl);
 
-  const [categoryItem, setCategoryItem] = useState<CategoryListProps>();
-
   const router = useRouter();
   const handleDeleteCategory = async (id: string) => {
     try {
@@ -58,7 +52,7 @@ const CategoryItem = ({ category }: CategoryListProps) => {
     }
   };
 
-  const handleEditCategory = (id: string) => {
+  const handleEditCategory = () => {
     setAlertEditDialog(false);
     setEditDialogOpen(true);
   };
@@ -154,7 +148,7 @@ const CategoryItem = ({ category }: CategoryListProps) => {
             >
               Cancelar
             </AlertDialogCancel>
-            <AlertDialogAction onClick={() => handleEditCategory(category.id)}>
+            <AlertDialogAction onClick={() => handleEditCategory()}>
               Editar
             </AlertDialogAction>
           </AlertDialogFooter>
