@@ -16,6 +16,9 @@ const RestaurantOrdersPage = async ({
     },
     include: {
       orders: {
+        orderBy: {
+          createdAt: "desc",
+        },
         include: {
           address: true,
           products: {
