@@ -7,7 +7,6 @@ import { formatCurrency } from "../_helpers/price";
 import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import { createOrder } from "../_actions/order";
-import { OrderStatus } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { Loader2, MapPin } from "lucide-react";
 import {
@@ -60,7 +59,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
         restaurant: {
           connect: { id: restaurant.id },
         },
-        status: OrderStatus.CONFIRMED,
+        status: "CONFIRMED",
         user: {
           connect: { id: data.user.id },
         },
