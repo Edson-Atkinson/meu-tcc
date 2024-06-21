@@ -1,8 +1,6 @@
 import { db } from "@/app/_lib/prisma";
 import React from "react";
 import CategoryItem from "./_components/CategoryItem";
-import { Button } from "@/app/_components/ui/button";
-import { Plus } from "lucide-react";
 import NewCategoryItem from "./_components/NewCategoryItem";
 
 interface CategoryRestaurantPageProps {
@@ -18,15 +16,18 @@ const CategoryRestaurantPage = async ({
       slug,
     },
     include: {
-      categories: true,
+      categories: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
     },
   });
 
   return (
     <div>
-      <div>{restaurantCategories?.name}</div>
-      <div className="flex items-center justify-between">
-        <h2>Categorias</h2>
+      <div className="flex items-center justify-between py-4">
+        <h2 className="text-xl font-bold">Categorias</h2>
         <NewCategoryItem restaurantSlug={slug} />
       </div>
       <div className="mt-10 gap-4 lg:grid lg:grid-cols-3">
