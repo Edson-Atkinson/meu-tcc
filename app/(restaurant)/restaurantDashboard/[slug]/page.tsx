@@ -1,6 +1,10 @@
 import { db } from "@/app/_lib/prisma";
 import { notFound } from "next/navigation";
 import React from "react";
+import TopSelling from "./_components/TopSelling";
+import BestCategories from "./_components/bestCategories";
+import ShowQuantitys from "./_components/ShowQuantitys";
+import Totals from "./_components/totals";
 
 interface RestaurantControlPageProps {
   params: {
@@ -32,13 +36,33 @@ const RestaurantControlPage = async ({
         },
       },
       products: {
-        take: 10,
         include: {
           restaurant: {
             select: {
               name: true,
             },
           },
+        },
+      },
+      orders: {
+        select: {
+          status: true,
+        },
+      },
+    },
+  });
+
+  const totalVendidos = await db.restaurant.findUnique({
+    where: {
+      slug,
+    },
+    include: {
+      orders: {
+        where: {
+          status: "COMPLETED",
+        },
+        select: {
+          status: true,
         },
       },
     },
@@ -48,9 +72,13 @@ const RestaurantControlPage = async ({
     return notFound();
   }
   return (
-    <div>
-      <h1>Pagina do restaurante {restaurant.name}</h1>
-      <p>{restaurant.description}</p>
+    <div className="w-full px-4 py-4">
+      <Totals restaurant={restaurant} />
+      <ShowQuantitys restaurant={restaurant} totalVendidos={totalVendidos!} />
+      <div className="grid grid-cols-2 gap-4">
+        <TopSelling id={restaurant.id} />
+        <BestCategories id={restaurant.id} />
+      </div>
     </div>
   );
 };
