@@ -68,11 +68,25 @@ const RestaurantControlPage = async ({
     },
   });
 
+  const user = await db.user.findFirst({
+    where: {
+      restaurants: {
+        some: {
+          name: {
+            equals: restaurant?.name,
+          },
+        },
+      },
+    },
+  });
+  console.log("usuarios---------" + user);
   if (!restaurant) {
     return notFound();
   }
+
   return (
     <div className="w-full px-4 py-4">
+      <div>{user?.name}</div>
       <Totals restaurant={restaurant} />
       <ShowQuantitys restaurant={restaurant} totalVendidos={totalVendidos!} />
       <div className="grid grid-cols-2 gap-4">
