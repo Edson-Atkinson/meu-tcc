@@ -41,6 +41,8 @@ model User {
   id                  String                   @id @default(cuid())
   name                String?
   email               String?                  @unique
+  password            String?
+  active              Boolean                  @default(true)
   emailVerified       DateTime?                @map("email_verified")
   image               String?
   accounts            Account[]
@@ -48,8 +50,15 @@ model User {
   orders              Order[]
   adresses            Address[]
   favoriteRestaurants UserFavoriteRestaurant[]
+  restaurants         Restaurant[]
+  role                Role                     @default(USER)
 
   @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model VerificationToken {
@@ -73,6 +82,8 @@ model Restaurant {
   products            Product[]
   orders              Order[]
   usersWhoFavorited   UserFavoriteRestaurant[]
+  User                User?                    @relation(fields: [userId], references: [id])
+  userId              String?
 }
 
 model UserFavoriteRestaurant {
@@ -135,8 +146,6 @@ model Order {
   address             Address?       @relation(fields: [addressId], references: [id])
   addressId           String?
 }
-
-
 
 model Address {
   id           String  @id @default(uuid())
