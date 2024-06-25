@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/app/_components/ui/card";
 import { Separator } from "@/app/_components/ui/separator";
 import { CartContext } from "@/app/_context/cart";
 import { formatCurrency } from "@/app/_helpers/price";
-import { OrderStatus, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ interface OrderItemProps {
   }>;
 }
 
-const getOrderStatusLabel = (status: OrderStatus) => {
+const getOrderStatusLabel = (status: string) => {
   switch (status) {
     case "CANCELED":
       return "Cancelado";
