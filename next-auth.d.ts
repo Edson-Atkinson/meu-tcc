@@ -1,10 +1,17 @@
-/* eslint-disable no-unused-vars */
-import { DefaultSession } from "next-auth";
+import { Prisma } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session {
-    user: {
-      id?: string;
-    } & DefaultSession["user"];
+    user: Prisma.UserGetPayload<{
+      include: { adresses: true; restaurants: true };
+    }>;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    user: Prisma.UserGetPayload<{
+      include: { adresses: true; restaurants: true };
+    }>;
   }
 }
