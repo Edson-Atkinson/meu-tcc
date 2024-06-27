@@ -57,3 +57,17 @@
     @apply text-foreground antialiased;
   }
 }
+*::-webkit-scrollbar {
+  width: 8px;
+  margin-left: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ce445b65;
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply bg-primary;
+  border-radius: 14px;
+}
