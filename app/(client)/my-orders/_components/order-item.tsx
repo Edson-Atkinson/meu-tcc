@@ -5,9 +5,10 @@ import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { Separator } from "@/app/_components/ui/separator";
 import { CartContext } from "@/app/_context/cart";
+import { getRelativeTimeString } from "@/app/_helpers/get-relative-time";
 import { formatCurrency } from "@/app/_helpers/price";
 import { Prisma } from "@prisma/client";
-import { ChevronRightIcon } from "lucide-react";
+import { ChevronRightIcon, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
@@ -21,6 +22,7 @@ interface OrderItemProps {
           product: true;
         };
       };
+      address: true;
     };
   }>;
 }
@@ -58,15 +60,25 @@ const OrderItem = ({ order }: OrderItemProps) => {
 
     router.push(`/restaurants/${order.restaurantId}`);
   };
+
+  const relativeTime = getRelativeTimeString(
+    new Date(order.createdAt),
+    "pt-br",
+  );
   return (
     <Card>
       <CardContent className="p-5">
-        <div
-          className={`w-fit rounded-full bg-[#EEEEEE] px-2 py-1 text-muted-foreground ${order.status !== "COMPLETED" && "bg-green-500 text-white"}`}
-        >
-          <span className="block text-xs font-semibold">
-            {getOrderStatusLabel(order.status)}
-          </span>
+        <div className="flex items-center justify-between">
+          <div
+            className={`w-fit rounded-full bg-[#EEEEEE] px-2 py-1 text-muted-foreground ${order.status !== "COMPLETED" && "bg-green-500 text-white"}`}
+          >
+            <span className="block text-xs font-semibold">
+              {getOrderStatusLabel(order.status)}
+            </span>
+          </div>
+          <div className="text-sm font-semibold">
+            <span>{relativeTime}</span>
+          </div>
         </div>
 
         <div className="flex items-center justify-between pt-3">
@@ -86,7 +98,10 @@ const OrderItem = ({ order }: OrderItemProps) => {
             className="h-5 w-5 text-black"
             asChild
           >
-            <Link href={`/restaurants/${order.restaurantId}`}>
+            <Link
+              href={`/restaurants/${order.restaurantId}`}
+              className="hover:text-primary"
+            >
               <ChevronRightIcon />
             </Link>
           </Button>
@@ -115,8 +130,23 @@ const OrderItem = ({ order }: OrderItemProps) => {
           <Separator />
         </div>
 
+        <div className="text-xs font-medium text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <span>
+              <MapPin />
+            </span>
+            <p>{`${order.address?.street}, ${order.address?.number} - ${order.address?.city} - ${order.address?.state}`}</p>
+          </div>
+        </div>
+
+        <div className="py-3">
+          <Separator />
+        </div>
+
         <div className="flex items-center justify-between">
-          <p className="text-sm">{formatCurrency(Number(order.totalPrice))}</p>
+          <p className="text-sm font-semibold">
+            {formatCurrency(Number(order.totalPrice))}
+          </p>
           <Button
             variant="ghost"
             size="sm"

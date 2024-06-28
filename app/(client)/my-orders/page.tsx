@@ -23,6 +23,10 @@ const MyOrdersPage = async () => {
           product: true,
         },
       },
+      address: true,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 
@@ -36,13 +40,17 @@ const MyOrdersPage = async () => {
       </div>
 
       <div className="px-5 py-6">
-        <h2 className="pb-6 text-lg font-semibold">Meus Pedidos</h2>
+        <h2 className="pb-6 text-sm font-semibold md:text-lg">Meus Pedidos</h2>
 
-        <div className="space-y-4">
-          {orders.map((order) => (
-            <OrderItem key={order.id} order={order} />
-          ))}
-        </div>
+        {orders.length > 0 ? (
+          <div className="space-y-4">
+            {orders.map((order) => (
+              <OrderItem key={order.id} order={order} />
+            ))}
+          </div>
+        ) : (
+          <p className="font-medium">Você ainda não realizou nenhum pedido!</p>
+        )}
       </div>
     </>
   );

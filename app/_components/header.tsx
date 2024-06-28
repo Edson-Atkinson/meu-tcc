@@ -43,10 +43,10 @@ const Header = ({ isInput }: HeaderProps) => {
   return (
     <div className="flex h-[80px] items-center justify-between border-b border-[#eeeeee] px-5 py-6">
       <Link href="/">
-        <div className="relative h-[30px] w-[100px]">
+        <div className="relative h-[30px] w-[150px]">
           <Image
             src="/logo.png"
-            alt="FSW Foods"
+            alt="MY DELIVERY"
             sizes="100%"
             fill
             className="object-cover"
@@ -70,7 +70,7 @@ const Header = ({ isInput }: HeaderProps) => {
               <ShoppingBag />
             </Button>
           </SheetTrigger>
-          <SheetContent className="h-[100%] w-[100%]">
+          <SheetContent className="h-full w-full overflow-y-auto [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block">
             <SheetHeader>
               <SheetTitle className="text-left">Sacola</SheetTitle>
             </SheetHeader>

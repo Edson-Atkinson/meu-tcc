@@ -38,8 +38,9 @@ const MyAdressesPage = async () => {
             ))}
           </div>
         ) : (
-          <h3 className="font-medium">
-            Você ainda não tem nenhum endereço cadastrado.
+          <h3 className="my-4 font-medium">
+            Você não possuí nenhum endereço cadastrado. Aproveite e cadastre um
+            agora!
           </h3>
         )}
 

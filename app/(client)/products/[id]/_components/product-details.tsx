@@ -3,7 +3,6 @@
 import Cart from "@/app/_components/cart";
 import DeliveryInfo from "@/app/_components/delivery-info";
 import DiscountBadge from "@/app/_components/discount-badge";
-import ProductList from "@/app/_components/product-list";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,7 +28,6 @@ import {
 import { Prisma } from "@prisma/client";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { useContext, useState } from "react";
 
 interface ProductDetailsProps {
@@ -46,7 +44,6 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
     useState(false);
 
-  const pathName = usePathname();
   const { addProductToCart, products } = useContext(CartContext);
 
   const addToCart = ({ emptyCart }: { emptyCart?: boolean }) => {
@@ -159,7 +156,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
       </div>
 
       <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-        <SheetContent className="w-[90vw]">
+        <SheetContent className="w-[100%] [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block">
           <SheetHeader>
             <SheetTitle className="text-left">Sacola</SheetTitle>
           </SheetHeader>
@@ -172,7 +169,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         open={isConfirmationDialogOpen}
         onOpenChange={setIsConfirmationDialogOpen}
       >
-        <AlertDialogContent>
+        <AlertDialogContent className="w-[90%] rounded-lg">
           <AlertDialogHeader>
             <AlertDialogTitle>
               Você só pode adicionar itens de um restaurante por vez

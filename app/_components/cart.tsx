@@ -40,6 +40,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
 
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const [collapsibleOpen, setCollapsibleOpen] = useState(false);
 
   const { data, status } = useSession();
 
@@ -98,7 +99,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
       <div className="flex h-full flex-col py-5">
         {products.length > 0 ? (
           <>
-            <div className=" flex-auto scroll-m-2 space-y-4 overflow-y-auto [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block">
+            <div className=" flex-auto space-y-4 overflow-y-auto [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block ">
               {products.map((product) => (
                 <CartItem key={product.id} cartProduct={product} />
               ))}
@@ -111,8 +112,10 @@ const Cart = ({ setIsOpen }: CartProps) => {
             </h2>
             {shippingAddress ? (
               <>
-                <Collapsible>
-                  <CollapsibleTrigger>
+                <Collapsible open={collapsibleOpen}>
+                  <CollapsibleTrigger
+                    onClick={() => setCollapsibleOpen(!collapsibleOpen)}
+                  >
                     <div className="mb-2 flex cursor-pointer items-center justify-between rounded-lg py-2 hover:bg-muted">
                       <div className="flex items-center gap-2">
                         <div className="text-primary">
@@ -132,7 +135,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
 
                   <CollapsibleContent>
                     <div className="my-2 h-fit rounded-lg border border-muted py-2">
-                      <div>
+                      <div onClick={() => setCollapsibleOpen(false)}>
                         {data?.user.adresses.map((address) => (
                           <AddressArea address={address} key={address.id} />
                         ))}
@@ -144,8 +147,20 @@ const Cart = ({ setIsOpen }: CartProps) => {
             ) : (
               <>
                 <Collapsible>
-                  <CollapsibleTrigger>
-                    <p>Selecione um endereço</p>
+                  <CollapsibleTrigger className="w-full">
+                    <div className="flex w-full items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-primary">
+                          <MapPin />
+                        </span>
+                        <p className="text-base font-medium">
+                          Selecione um endereço
+                        </p>
+                      </div>
+                      <span className="text-primary">
+                        <ChevronRight />
+                      </span>
+                    </div>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <div className="my-2 h-fit rounded-lg border border-muted py-2">
