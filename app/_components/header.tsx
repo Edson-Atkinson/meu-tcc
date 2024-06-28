@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { FaUserCog } from "react-icons/fa";
 import {
   HeartIcon,
   HomeIcon,
@@ -11,6 +12,7 @@ import {
   MenuIcon,
   ScrollTextIcon,
   ShoppingBag,
+  Store,
 } from "lucide-react";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -33,10 +35,10 @@ interface HeaderProps {
 
 const Header = ({ isInput }: HeaderProps) => {
   const { data } = useSession();
-
   const [isCartOpen, setIsCartOpen] = useState(false);
   const handleSignOutClick = () => signOut();
   const handleSignInClick = () => signIn();
+  const restaurant = data?.user.restaurants[0];
 
   return (
     <div className="flex h-[80px] items-center justify-between border-b border-[#eeeeee] px-5 py-6">
@@ -68,7 +70,7 @@ const Header = ({ isInput }: HeaderProps) => {
               <ShoppingBag />
             </Button>
           </SheetTrigger>
-          <SheetContent>
+          <SheetContent className="h-[100%] w-[100%]">
             <SheetHeader>
               <SheetTitle className="text-left">Sacola</SheetTitle>
             </SheetHeader>
@@ -124,11 +126,9 @@ const Header = ({ isInput }: HeaderProps) => {
                 </div>
               </>
             )}
-
             <div className="py-6">
               <Separator />
             </div>
-
             <div className="space-y-2">
               <Button
                 variant="ghost"
@@ -177,12 +177,46 @@ const Header = ({ isInput }: HeaderProps) => {
                   </Button>
                 </>
               )}
+              {data?.user.role === "RESTAURANT" && (
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start space-x-3 rounded-full text-sm font-normal hover:bg-primary hover:text-white"
+                  asChild
+                >
+                  <Link href={`/restaurantDashboard/${restaurant?.slug}`}>
+                    <Store size={16} />
+                    <span className="block">Vendedor </span>
+                  </Link>
+                </Button>
+              )}
+              {data?.user.role === "ADMIN" && (
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start space-x-3 rounded-full text-sm font-normal hover:bg-primary hover:text-white"
+                  asChild
+                >
+                  <Link href={`/restaurantDashboard/${restaurant?.slug}`}>
+                    <Store size={16} />
+                    <span className="block">Vendedor </span>
+                  </Link>
+                </Button>
+              )}
+              {data?.user.role === "ADMIN" && (
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start space-x-3 rounded-full text-sm font-normal hover:bg-primary hover:text-white"
+                  asChild
+                >
+                  <Link href={`/admin`}>
+                    <FaUserCog size={16} />
+                    <span className="block">Administrador</span>
+                  </Link>
+                </Button>
+              )}
             </div>
-
             <div className="py-6">
               <Separator />
             </div>
-
             {data?.user && (
               <Button
                 variant="ghost"
