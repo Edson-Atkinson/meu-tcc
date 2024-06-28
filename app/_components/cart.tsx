@@ -8,7 +8,7 @@ import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import { createOrder } from "../_actions/order";
 import { useSession } from "next-auth/react";
-import { Loader2, MapPin } from "lucide-react";
+import { ChevronRight, Loader2, MapPin } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,7 +22,12 @@ import {
 import { toast } from "sonner";
 import { usePathname, useRouter } from "next/navigation";
 import { useAppContext } from "../_context/address";
-import Link from "next/link";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/app/_components/ui/collapsible";
+import AddressArea from "./addressArea";
 
 interface CartProps {
   // eslint-disable-next-line no-unused-vars
@@ -79,21 +84,12 @@ const Cart = ({ setIsOpen }: CartProps) => {
       clearCart();
       setIsOpen(false);
 
-      toast.success(
-        "Pedido finalizado com sucesso!",
-
-        {
-          description: "Você pode acompanhá-lo na tela dos seus pedidos.",
-          action: {
-            label: "Meus Pedidos",
-            onClick: () => router.push("/my-orders"),
-          },
-        },
-      );
+      toast.success("Pedido finalizado com sucesso!");
     } catch (error) {
       console.error(error);
     } finally {
       setIsSubmitLoading(false);
+      router.push("/my-orders");
     }
   };
 
@@ -102,7 +98,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
       <div className="flex h-full flex-col py-5">
         {products.length > 0 ? (
           <>
-            <div className="flex-auto space-y-4">
+            <div className=" flex-auto scroll-m-2 space-y-4 overflow-y-auto [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block">
               {products.map((product) => (
                 <CartItem key={product.id} cartProduct={product} />
               ))}
@@ -110,22 +106,62 @@ const Cart = ({ setIsOpen }: CartProps) => {
 
             <Separator />
             {/* Area de endereços */}
-            <h2 className="text-lg font-medium ">Endereço de entrega</h2>
-            <div className="py-4 hover:bg-muted">
-              <Link
-                href="/my-adresses"
-                className="flex items-center justify-between gap-2"
-              >
-                <div className="text-primary">
-                  <MapPin size={24} />
-                </div>
-                <p className="line-clamp-1 text-base">
-                  {shippingAddress
-                    ? `${shippingAddress.street}, ${shippingAddress.number} - ${shippingAddress.city} - ${shippingAddress.state}`
-                    : `Escolha um endereço`}
-                </p>
-              </Link>
-            </div>
+            <h2 className="my-2 text-base font-semibold">
+              Endereço de entrega
+            </h2>
+            {shippingAddress ? (
+              <>
+                <Collapsible>
+                  <CollapsibleTrigger>
+                    <div className="mb-2 flex cursor-pointer items-center justify-between rounded-lg py-2 hover:bg-muted">
+                      <div className="flex items-center gap-2">
+                        <div className="text-primary">
+                          <MapPin size={24} />
+                        </div>
+                        <p className="line-clamp-1">
+                          {shippingAddress.street},{shippingAddress.number} -{" "}
+                          {shippingAddress.city} - {shippingAddress.state}
+                        </p>
+                      </div>
+
+                      <div className="text-primary">
+                        <ChevronRight size={24} />
+                      </div>
+                    </div>
+                  </CollapsibleTrigger>
+
+                  <CollapsibleContent>
+                    <div className="my-2 h-fit rounded-lg border border-muted py-2">
+                      <div>
+                        {data?.user.adresses.map((address) => (
+                          <AddressArea address={address} key={address.id} />
+                        ))}
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </>
+            ) : (
+              <>
+                <Collapsible>
+                  <CollapsibleTrigger>
+                    <p>Selecione um endereço</p>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="my-2 h-fit rounded-lg border border-muted py-2">
+                      <div>
+                        {data?.user.adresses.map((address) => (
+                          <AddressArea address={address} key={address.id} />
+                        ))}
+                      </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </>
+            )}
+
+            <Separator />
+
             {/* TOTAIS */}
             <div className="mt-6">
               <Card>
@@ -185,7 +221,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
         onOpenChange={setIsConfirmDialogOpen}
       >
         {status === "authenticated" && (
-          <AlertDialogContent>
+          <AlertDialogContent className="w-[90%] rounded-lg">
             <AlertDialogHeader>
               <AlertDialogTitle>Deseja finalizar seu pedido?</AlertDialogTitle>
               <AlertDialogDescription>
@@ -209,7 +245,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
         )}
 
         {status === "unauthenticated" && (
-          <AlertDialogContent>
+          <AlertDialogContent className="w-[90%] rounded-lg">
             <AlertDialogHeader>
               <AlertDialogTitle>Deseja finalizar seu pedido?</AlertDialogTitle>
               <AlertDialogDescription>
@@ -220,9 +256,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
             <AlertDialogFooter>
               <AlertDialogCancel>Cancelar</AlertDialogCancel>
               <AlertDialogAction
-                onClick={() =>
-                  router.push(`/api/auth/signin?callbackUrl=${pathName}`)
-                }
+                onClick={() => router.push(`/login?callbackUrl=${pathName}`)}
                 disabled={isSubmitLoading}
               >
                 {isSubmitLoading && (
