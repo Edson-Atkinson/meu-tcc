@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import React from "react";
 import { authOptions } from "../../_lib/auth";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { db } from "../../_lib/prisma";
 import AddressItem from "./_components/address-item";
 import Header from "../../_components/header";
@@ -12,7 +12,7 @@ const MyAdressesPage = async () => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return notFound();
+    redirect("/");
   }
 
   const userAdresses = await db.address.findMany({
@@ -25,26 +25,27 @@ const MyAdressesPage = async () => {
       <div className="lg:hidden">
         <Header />
       </div>
-      <div className="hidden lg:block">
+      <div className="mb-6 hidden lg:block">
         <Header isInput />
       </div>
 
-      <div className="px-4 pt-5">
-        <h2 className="text-lg font-semibold">Meus endereços</h2>
-        <div>
-          {userAdresses.length > 0 ? (
-            userAdresses.map((address) => (
+      <div className="w-full p-4 md:m-auto md:max-w-[500px] md:rounded-lg md:border md:border-muted ">
+        <h2 className="text-sm font-semibold md:text-lg">Meus endereços</h2>
+        {userAdresses.length > 0 ? (
+          <div>
+            {userAdresses.map((address) => (
               <AddressItem key={address.id} address={address} />
-            ))
-          ) : (
-            <h3 className="font-medium">
-              Você ainda não tem nenhum endereço cadastrado.
-            </h3>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <h3 className="font-medium">
+            Você ainda não tem nenhum endereço cadastrado.
+          </h3>
+        )}
+
         <div>
           <Link href="/my-adresses/new-address">
-            <Button className="w-full bg-primary text-white ">
+            <Button className="my-4 w-full bg-primary text-white md:w-fit ">
               Novo endereço
             </Button>
           </Link>

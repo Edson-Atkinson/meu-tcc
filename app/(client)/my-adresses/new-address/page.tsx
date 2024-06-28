@@ -45,17 +45,28 @@ const NewAddressPage = () => {
     }
   };
 
+  const handleCleanAdress = () => {
+    setCep("");
+    setStreet("");
+    setNumber(0);
+    setCity("");
+    setState("");
+    setComplement("");
+  };
   return (
     <div>
       <div>
         <div className="lg:hidden">
           <Header />
         </div>
-        <div className="hidden lg:block">
+        <div className="mb-6 hidden lg:block">
           <Header isInput />
         </div>
       </div>
-      <div className="flex flex-col px-4 pt-6">
+      <div className="flex  flex-col p-4 md:m-auto md:mb-4 md:max-w-[500px] md:rounded-lg md:border md:border-muted">
+        <h2 className="pb-2 text-center text-sm font-semibold md:text-lg">
+          Novo Endereço
+        </h2>
         <form action="" className="mb-4 flex-1 space-y-4">
           <div>
             <label htmlFor="cep">Cep:</label>
@@ -66,8 +77,8 @@ const NewAddressPage = () => {
               className="border-none outline-none"
             />
           </div>
-          <div className="flex gap-2">
-            <div>
+          <div className="flex gap-2 ">
+            <div className="flex-1">
               <label htmlFor="street">Rua:</label>
               <Input
                 id="street"
@@ -123,9 +134,18 @@ const NewAddressPage = () => {
             />
           </div>
         </form>
-        <Button onClick={handleAddAdress} className="w-full ">
-          Adicionar
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={handleAddAdress} className="w-full md:w-fit ">
+            Cadastrar
+          </Button>
+          <Button
+            variant={"ghost"}
+            onClick={handleCleanAdress}
+            className="w-full md:w-fit "
+          >
+            Limpar
+          </Button>
+        </div>
       </div>
     </div>
   );
