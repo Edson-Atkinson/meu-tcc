@@ -60,7 +60,7 @@ const Header = ({ isInput }: HeaderProps) => {
       )}
       <div className="flex items-center gap-2">
         <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-          <SheetTrigger>
+          <SheetTrigger asChild>
             <Button
               size="icon"
               variant="outline"

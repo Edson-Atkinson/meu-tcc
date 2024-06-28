@@ -27,7 +27,7 @@ export default async function RootLayout({
     redirect("/");
   }
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={poppins.className}>
         <AuthProvider>
           <div className="lg:hidden">

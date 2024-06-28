@@ -35,7 +35,7 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
   if (session?.user.role == "USER") {
     return (
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body className={poppins.className}>
           <AuthProvider>
             <div className="h-full w-full bg-slate-600">
@@ -61,7 +61,7 @@ export default async function RootLayout({
     );
   }
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={poppins.className}>
         <AuthProvider>
           <div className="lg:hidden">
