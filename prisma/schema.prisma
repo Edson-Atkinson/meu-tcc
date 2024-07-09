@@ -52,6 +52,7 @@ model User {
   favoriteRestaurants UserFavoriteRestaurant[]
   restaurants         Restaurant[]
   role                Role                     @default(USER)
+  access_token        String?                  @db.Text
 
   @@map("users")
 }
