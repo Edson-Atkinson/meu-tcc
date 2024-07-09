@@ -135,10 +135,7 @@ const Form = (
           <div className="w-full">
             <label htmlFor="category">Selecione uma categoria:</label>
             <Select onValueChange={setCategory} value={category}>
-              <SelectTrigger
-                asChild
-                className="w-full border-none outline-none"
-              >
+              <SelectTrigger className="w-full border-none outline-none">
                 <SelectValue placeholder="Categoria" id="category" />
               </SelectTrigger>
               <SelectContent>

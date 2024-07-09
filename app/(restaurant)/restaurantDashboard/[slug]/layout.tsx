@@ -33,7 +33,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
-  if (session?.user.role == "USER") {
+  if (
+    !session ||
+    session?.user.role === "USER" ||
+    session?.user.active === false
+  ) {
     return (
       <html lang="en" suppressHydrationWarning>
         <body className={poppins.className}>

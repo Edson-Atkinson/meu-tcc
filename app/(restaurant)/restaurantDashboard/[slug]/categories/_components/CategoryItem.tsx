@@ -158,7 +158,7 @@ const CategoryItem = ({ category }: CategoryListProps) => {
       <Dialog open={editDialogOpen}>
         <DialogContent className="">
           <DialogHeader>
-            <DialogTitle>Adicionar nova categoria</DialogTitle>
+            <DialogTitle>Editar categoria</DialogTitle>
           </DialogHeader>
           <div>
             <label htmlFor="name">Nome da categoria:</label>

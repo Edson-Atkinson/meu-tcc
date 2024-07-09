@@ -62,7 +62,7 @@ const OrderItem = ({ order }: OrderItemProps) => {
       <div className=" relative min-h-[250px] w-full rounded-b-lg  p-4 ">
         <div>
           <Select onValueChange={setStatus} value={status}>
-            <SelectTrigger asChild className="w-full border-none outline-none">
+            <SelectTrigger className="w-full border-none outline-none">
               <SelectValue
                 placeholder={"Status"}
                 id="status"

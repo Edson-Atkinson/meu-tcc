@@ -31,7 +31,7 @@ const EditProductPage = async ({
   return (
     <div className="w-full px-4">
       <div className="py-4 text-lg font-semibold">
-        <h2>Editar produto{product?.name}</h2>
+        <h2>Editar produto</h2>
       </div>
       <div>
         <EditItem restaurant={restaurantCategory!} product={product!} />

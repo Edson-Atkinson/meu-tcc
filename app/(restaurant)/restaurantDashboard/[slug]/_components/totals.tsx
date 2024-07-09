@@ -72,17 +72,25 @@ const Totals = async ({ restaurant }: RestaurantProps) => {
         <div className="flex items-center gap-2 text-lg">
           <Landmark /> <span>Total de receita</span>
         </div>
-        <p className="text-2xl font-bold">
-          R$ {receita.map((i) => i._sum.totalPrice?.toNumber())}
-        </p>
+        {receita.length > 0 ? (
+          <p className="text-2xl font-bold">
+            R$ {receita.map((i) => i._sum.totalPrice?.toNumber())}
+          </p>
+        ) : (
+          <p className="text-2xl font-bold">R$ 00,00</p>
+        )}
       </div>
       <div className="flex h-[157px] flex-col  justify-center gap-2 rounded-lg bg-primary px-4 text-white">
         <div className="flex items-center gap-2 text-lg">
           <DollarSign /> <span>Receita Hoje</span>
         </div>
-        <p className="text-2xl font-bold">
-          R$ {receitaNow.map((i) => i._sum.totalPrice?.toNumber())}
-        </p>
+        {receitaNow.length > 0 ? (
+          <p className="text-2xl font-bold">
+            R$ {receitaNow.map((i) => i._sum.totalPrice?.toNumber())}
+          </p>
+        ) : (
+          <p className="text-2xl font-bold">R$ 00,00</p>
+        )}
       </div>
     </div>
   );
