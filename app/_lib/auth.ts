@@ -5,8 +5,6 @@ import GoogleProvider from "next-auth/providers/google";
 import { Adapter } from "next-auth/adapters";
 import bcrypt from "bcryptjs";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { userAuth } from "../_types/userAuth";
-import { User } from "@prisma/client";
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(db) as Adapter,
