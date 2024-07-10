@@ -3,15 +3,30 @@ import { AuthOptions } from "next-auth";
 import { db } from "./prisma";
 import GoogleProvider from "next-auth/providers/google";
 import { Adapter } from "next-auth/adapters";
-// import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { userAuth } from "../_types/userAuth";
+import { User } from "@prisma/client";
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(db) as Adapter,
+  pages: {
+    signIn: "/login/signIn",
+  },
+  session: { strategy: "jwt" },
+  jwt: { secret: process.env.NEXTAUTH_SECRET },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: `${profile.given_name} ${profile.family_name}`,
+          isSubscribed: false,
+        };
+      },
     }),
     CredentialsProvider({
       id: "credentials",
@@ -23,19 +38,23 @@ export const authOptions: AuthOptions = {
       authorize: async (credentials, req) => {
         if (credentials && credentials.email && credentials.password) {
           const user = await db.user.findFirst({
-            where: { email: credentials.email, password: credentials.password },
+            where: { email: credentials.email },
             include: { adresses: true, restaurants: true },
           });
-          if (!user) throw new Error("User name or password is not correct");
+          if (!user) throw new Error("email ou senha não estão corretos");
           if (!credentials?.password)
-            throw new Error("Please Provide Your Password");
+            throw new Error("Por favor forneça sua senha");
 
-          // const isPasswordCorrect = await bcrypt.compare(
-          //   credentials.password,
-          //   user.password!,
-          // );
-          // if (!isPasswordCorrect)
-          //   throw new Error("User name or password is not correct");
+          const isPasswordCorrect = await bcrypt.compare(
+            credentials.password,
+            user.password as string,
+          );
+
+          if (!isPasswordCorrect)
+            throw new Error("email ou senha não estão corretos");
+
+          if (!user.emailVerified) throw new Error("EmailNotVerified");
+
           const { password, ...userWithoutPass } = user;
           return userWithoutPass as any;
         }
@@ -45,21 +64,19 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.isSubscribed = user.isSubscribed;
         token.user = user as any;
       }
       return token;
     },
     async session({ token, session }) {
-      session.user = token.user;
+      if (session.user) {
+        session.user = token.user;
+      }
 
       return session;
     },
   },
-  session: { strategy: "jwt" },
-  jwt: { secret: process.env.NEXTAUTH_SECRET },
-  secret: process.env.NEXTAUTH_SECRET,
 
-  pages: {
-    signIn: "/login",
-  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
