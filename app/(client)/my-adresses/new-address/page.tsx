@@ -2,7 +2,7 @@
 import Header from "@/app/_components/header";
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { createAddress } from "./_action/create-address";
 import { toast } from "sonner";
@@ -21,6 +21,11 @@ const NewAddressPage = () => {
 
   const router = useRouter();
 
+  const refreshSessionAndReload = async () => {
+    await signIn("jwt", { redirect: false });
+    router.push(`/my-adresses`);
+  };
+
   const handleAddAdress = async () => {
     if (!data?.user) return;
 
@@ -38,7 +43,7 @@ const NewAddressPage = () => {
         },
       });
 
-      router.push("/my-adresses");
+      refreshSessionAndReload();
       toast.success("Endereço adicionado com sucesso!");
     } catch (error) {
       console.error(error);

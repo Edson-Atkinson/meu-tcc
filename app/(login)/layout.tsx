@@ -3,6 +3,8 @@ import AuthProvider from "@/app/_providers/auth";
 import { Poppins } from "next/font/google";
 import "@/app/globals.css";
 import { Toaster } from "sonner";
+import { Toaster as Toaster2 } from "@/app/_components/ui/toaster";
+
 import { getServerSession } from "next-auth";
 import { authOptions } from "../_lib/auth";
 import { redirect } from "next/navigation";
@@ -37,6 +39,8 @@ export default async function RootLayout({
             <Header isInput />
           </div>
           <div className="px-4">{children}</div>
+
+          <Toaster2 />
           <Toaster richColors />
         </AuthProvider>
       </body>

@@ -4,9 +4,9 @@ import UserItem from "./_components/usersItem";
 
 const AdminPage = async () => {
   const users = await db.user.findMany({
-    // where: {
-    //   password: { not: null },
-    // },
+    where: {
+      password: { not: null },
+    },
     include: {
       restaurants: true,
     },
@@ -14,6 +14,9 @@ const AdminPage = async () => {
   return (
     <div>
       <div className="container pt-8">
+        <h2 className="mb-4 text-sm font-semibold md:text-lg">
+          Página do Administrador
+        </h2>
         <table className="w-full">
           <thead className="border-b border-muted text-lg font-semibold">
             <tr className="text-center">
