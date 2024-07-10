@@ -38,21 +38,27 @@ model Session {
 }
 
 model User {
-  id                  String                   @id @default(cuid())
-  name                String?
-  email               String?                  @unique
-  password            String?
-  active              Boolean                  @default(true)
-  emailVerified       DateTime?                @map("email_verified")
-  image               String?
-  accounts            Account[]
-  sessions            Session[]
-  orders              Order[]
-  adresses            Address[]
-  favoriteRestaurants UserFavoriteRestaurant[]
-  restaurants         Restaurant[]
-  role                Role                     @default(USER)
-  access_token        String?                  @db.Text
+  id                       String                   @id @default(cuid())
+  username                 String?                  @unique
+  name                     String?
+  email                    String?                  @unique
+  password                 String?
+  active                   Boolean                  @default(true)
+  resetPasswordToken       String?                  @unique
+  resetPasswordTokenExpiry DateTime?
+  emailVerified            Boolean?                 @default(false)
+  emailVerificationToken   String?                  @unique
+  isSubscribed             Boolean?                 @default(false)
+  createdAt                DateTime                 @default(now())
+  updatedAt                DateTime                 @updatedAt
+  image                    String?
+  accounts                 Account[]
+  sessions                 Session[]
+  orders                   Order[]
+  adresses                 Address[]
+  favoriteRestaurants      UserFavoriteRestaurant[]
+  restaurants              Restaurant[]
+  role                     Role                     @default(USER)
 
   @@map("users")
 }
