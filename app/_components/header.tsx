@@ -38,7 +38,6 @@ const Header = ({ isInput }: HeaderProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const handleSignOutClick = () => signOut();
   const handleSignInClick = () => signIn();
-  const restaurant = data?.user.restaurants[0];
 
   return (
     <div className="flex h-[80px] items-center justify-between border-b border-[#eeeeee] px-5 py-6">
@@ -177,25 +176,29 @@ const Header = ({ isInput }: HeaderProps) => {
                   </Button>
                 </>
               )}
-              {data?.user.role === "RESTAURANT" && (
+              {data?.user.role === "RESTAURANT" && data?.user?.restaurants && (
                 <Button
                   variant="ghost"
                   className="w-full justify-start space-x-3 rounded-full text-sm font-normal hover:bg-primary hover:text-white"
                   asChild
                 >
-                  <Link href={`/restaurantDashboard/${restaurant?.slug}`}>
+                  <Link
+                    href={`/restaurantDashboard/${data.user.restaurants[0].slug}`}
+                  >
                     <Store size={16} />
                     <span className="block">Vendedor </span>
                   </Link>
                 </Button>
               )}
-              {data?.user.role === "ADMIN" && (
+              {data?.user.role === "ADMIN" && data?.user.restaurants && (
                 <Button
                   variant="ghost"
                   className="w-full justify-start space-x-3 rounded-full text-sm font-normal hover:bg-primary hover:text-white"
                   asChild
                 >
-                  <Link href={`/restaurantDashboard/${restaurant?.slug}`}>
+                  <Link
+                    href={`/restaurantDashboard/${data.user.restaurants[0].slug}`}
+                  >
                     <Store size={16} />
                     <span className="block">Vendedor </span>
                   </Link>

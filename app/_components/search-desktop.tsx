@@ -27,7 +27,7 @@ const SearchDesktop = () => {
 
   return (
     <div className="relative  flex h-[500px] w-full gap-4 bg-primary">
-      <div className="ml-20 flex h-[210px] flex-col gap-8 pt-[100px]">
+      <div className="ml-20 flex h-[210px] flex-col gap-8 pt-[100px] lg:w-[550px] xl:w-[750px]">
         <div className="flex flex-col gap-2">
           <h2 className="text-5xl font-bold text-white">Está com fome?</h2>
           <p className="text-lg text-white">
@@ -51,13 +51,12 @@ const SearchDesktop = () => {
           </Button>
         </form>
       </div>
-      <div className="shadow-3xl absolute bottom-0 right-20 block rounded-full">
+      <div className="absolute bottom-0 right-20 block h-[300px] max-h-[250px] w-[300px] max-w-[300px] rounded-full shadow-xl">
         <Image
           src="/image-base.png"
-          width={370}
-          height={370}
+          fill
           alt="Prato Feito"
-          className="bg-bgShadow"
+          className="object-fit  relative"
         />
       </div>
     </div>
