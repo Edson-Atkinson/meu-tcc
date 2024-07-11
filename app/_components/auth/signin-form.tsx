@@ -115,7 +115,7 @@ export function SignInForm({ callbackUrl }: Props) {
                       <Input
                         type="email"
                         placeholder="Seu Email"
-                        className={`${form.formState.errors.email && "border-destructive bg-destructive/30"}`}
+                        className={`${form.formState.errors.email && "border-destructive bg-destructive/30"} border-muted`}
                         {...field}
                       />
                     </div>
@@ -136,23 +136,27 @@ export function SignInForm({ callbackUrl }: Props) {
                       <Icons.key
                         className={`${form.formState.errors.password ? "text-destructive" : "text-muted-foreground"} `}
                       />
-                      <Input
-                        type={isVisiblePass ? "text" : "password"}
-                        placeholder="Sua senha"
-                        className={`${form.formState.errors.password && "border-destructive bg-destructive/30"}`}
+                      <div
+                        className={`${form.formState.errors.password && "border-destructive bg-destructive/30"} flex w-full items-center gap-2 rounded-lg border-muted bg-background px-2`}
                         {...field}
-                      />
-                      {isVisiblePass ? (
-                        <Icons.eyeOff
-                          onClick={toggleVisblePass}
-                          className={`${form.formState.errors.password ? "text-destructive" : "text-muted-foreground"} `}
+                      >
+                        <Input
+                          type={isVisiblePass ? "text" : "password"}
+                          placeholder="Sua senha"
+                          className=" rounded-none border-none bg-transparent"
                         />
-                      ) : (
-                        <Icons.eye
-                          onClick={toggleVisblePass}
-                          className={`${form.formState.errors.password ? "text-destructive" : "text-muted-foreground"} `}
-                        />
-                      )}
+                        {isVisiblePass ? (
+                          <Icons.eyeOff
+                            onClick={toggleVisblePass}
+                            className={`${form.formState.errors.password ? "text-destructive" : "text-muted-foreground"}  cursor-pointer`}
+                          />
+                        ) : (
+                          <Icons.eye
+                            onClick={toggleVisblePass}
+                            className={`${form.formState.errors.password ? "text-destructive" : "text-muted-foreground"} cursor-pointer `}
+                          />
+                        )}
+                      </div>
                     </div>
                   </FormControl>
                   <FormMessage />
