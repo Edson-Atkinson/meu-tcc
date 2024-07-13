@@ -74,7 +74,10 @@ const Totals = async ({ restaurant }: RestaurantProps) => {
         </div>
         {receita.length > 0 ? (
           <p className="text-2xl font-bold">
-            R$ {receita.map((i) => i._sum.totalPrice?.toNumber())}
+            R${" "}
+            {receita.map((i) =>
+              i._sum.totalPrice?.toNumber().toFixed(2).replace(".", ","),
+            )}
           </p>
         ) : (
           <p className="text-2xl font-bold">R$ 00,00</p>

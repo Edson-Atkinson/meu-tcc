@@ -190,21 +190,8 @@ const Header = ({ isInput }: HeaderProps) => {
                   </Link>
                 </Button>
               )}
+
               {data?.user.role === "ADMIN" && data?.user.restaurants && (
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start space-x-3 rounded-full text-sm font-normal hover:bg-primary hover:text-white"
-                  asChild
-                >
-                  <Link
-                    href={`/restaurantDashboard/${data.user.restaurants[0].slug}`}
-                  >
-                    <Store size={16} />
-                    <span className="block">Vendedor </span>
-                  </Link>
-                </Button>
-              )}
-              {data?.user.role === "ADMIN" && (
                 <Button
                   variant="ghost"
                   className="w-full justify-start space-x-3 rounded-full text-sm font-normal hover:bg-primary hover:text-white"

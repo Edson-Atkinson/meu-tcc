@@ -60,7 +60,6 @@ const EditItem = ({ restaurant, product }: FormProps) => {
       router.push(`/restaurantDashboard/${restaurant.slug}/products`);
       router.refresh();
       toast.success("Produto editado com sucesso!");
-      revalidatePath(`/restaurantDashboard/${restaurant.slug}/products`);
     }
   };
   const handleClearForm = () => {

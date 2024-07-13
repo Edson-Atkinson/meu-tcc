@@ -115,7 +115,7 @@ export function SignInForm({ callbackUrl }: Props) {
                       <Input
                         type="email"
                         placeholder="Seu Email"
-                        className={`${form.formState.errors.email && "border-destructive bg-destructive/30"} border-muted`}
+                        className={`${form.formState.errors.email && "border-destructive bg-destructive/30"} border-muted focus-visible:ring-transparent`}
                         {...field}
                       />
                     </div>
@@ -143,7 +143,7 @@ export function SignInForm({ callbackUrl }: Props) {
                         <Input
                           type={isVisiblePass ? "text" : "password"}
                           placeholder="Sua senha"
-                          className=" rounded-none border-none bg-transparent"
+                          className=" rounded-none border-none bg-transparent focus-visible:ring-transparent focus-visible:ring-offset-0"
                         />
                         {isVisiblePass ? (
                           <Icons.eyeOff

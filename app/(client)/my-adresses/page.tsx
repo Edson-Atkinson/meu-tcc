@@ -22,23 +22,23 @@ const MyAdressesPage = async () => {
   });
   return (
     <div>
-      <div className="lg:hidden">
+      <div className="mb-6 lg:hidden">
         <Header />
       </div>
       <div className="mb-6 hidden lg:block">
         <Header isInput />
       </div>
 
-      <div className="w-full p-4 md:m-auto md:max-w-[500px] md:rounded-lg md:border md:border-muted ">
-        <h2 className="text-sm font-semibold md:text-lg">Meus endereços</h2>
+      <div className="flex min-h-[500px] w-full flex-col p-4 md:m-auto md:max-w-[500px] md:rounded-lg md:border md:border-muted">
+        <h2 className="text-base font-bold md:text-lg">Meus endereços</h2>
         {userAdresses.length > 0 ? (
-          <div>
+          <div className="flex-1">
             {userAdresses.map((address) => (
               <AddressItem key={address.id} address={address} />
             ))}
           </div>
         ) : (
-          <h3 className="my-4 font-medium">
+          <h3 className="my-4 flex-1 font-medium">
             Você não possuí nenhum endereço cadastrado. Aproveite e cadastre um
             agora!
           </h3>

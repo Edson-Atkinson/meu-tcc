@@ -24,8 +24,8 @@ export default async function signUpPage({ searchParams }: Props) {
 
   return (
     <>
-      <div className="flex flex-col-reverse items-center justify-center px-0 lg:h-screen lg:flex-row">
-        <div className="relative h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex lg:w-[80%]">
+      <div className="m-0 flex w-full justify-center lg:h-screen lg:flex-row">
+        <div className="relative h-full  border-r  bg-muted lg:w-[60%]">
           <div className="absolute inset-0 bg-slate-900">
             <Image
               alt="My Delivery - Autenticação"
@@ -36,13 +36,13 @@ export default async function signUpPage({ searchParams }: Props) {
             />
           </div>
         </div>
-        <div className="relative grid min-h-screen w-auto place-content-center p-10 lg:w-[1000px]">
-          <div className="absolute right-6 top-6">
+        <div className="relative grid min-h-screen w-auto  px-4 lg:w-[40%]">
+          <div className="absolute right-6 top-6 hidden  lg:block">
             <Button size={"sm"} variant={"secondary"} asChild>
               <Link href="/login/signIn">Entrar</Link>
             </Button>
           </div>
-          <div className="w-full max-w-[360px]">
+          <div className="max-w-[360 px] mt-10 w-full">
             <div className="my-6 flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
                 Criar uma conta
@@ -52,20 +52,30 @@ export default async function signUpPage({ searchParams }: Props) {
               </p>
             </div>
             <SignUpForm />
+            <div className="mt-4 text-center lg:hidden">
+              <span className="text-sm font-semibold text-muted-foreground">
+                ou
+              </span>
+              <div className="my-4 w-full">
+                <Button variant={"secondary"} className="w-full" asChild>
+                  <Link href="/login/signUp">Entre</Link>
+                </Button>
+              </div>
+            </div>
             <p className="px-8 pb-2 pt-6 text-center text-sm text-muted-foreground">
               Ao clicar em cadastrar, você concorda com nossos{" "}
             </p>
-            <div className="flex justify-center gap-2 text-sm text-muted-foreground">
+            <div className="flex flex-col items-center justify-center gap-2 text-sm text-muted-foreground md:flex-row">
               <Link
                 href="/terms"
-                className="underline underline-offset-4 hover:text-primary"
+                className="text-sm underline underline-offset-4 hover:text-primary"
               >
                 Termos de Serviço
               </Link>{" "}
               e{" "}
               <Link
                 href="/privacy"
-                className="underline underline-offset-4 hover:text-primary"
+                className="underline underline-offset-4 hover:text-primary "
               >
                 Política de Privacidade
               </Link>
