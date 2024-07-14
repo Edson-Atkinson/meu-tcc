@@ -29,7 +29,6 @@ import {
   CollapsibleTrigger,
 } from "@/app/_components/ui/collapsible";
 import AddressArea from "./addressArea";
-import PaymentType from "./payment";
 import { Input } from "./ui/input";
 
 interface CartProps {
