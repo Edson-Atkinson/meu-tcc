@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import { createOrder } from "../_actions/order";
 import { useSession } from "next-auth/react";
 import { ChevronRight, Loader2, MapPin } from "lucide-react";
+import { Banknote, CreditCard } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,6 +29,8 @@ import {
   CollapsibleTrigger,
 } from "@/app/_components/ui/collapsible";
 import AddressArea from "./addressArea";
+import PaymentType from "./payment";
+import { Input } from "./ui/input";
 
 interface CartProps {
   // eslint-disable-next-line no-unused-vars
@@ -41,6 +44,8 @@ const Cart = ({ setIsOpen }: CartProps) => {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const [collapsibleOpen, setCollapsibleOpen] = useState(false);
+  const [type, setType] = useState("card" || "cash");
+  const [change, setChange] = useState("");
 
   const { data, status } = useSession();
 
@@ -80,6 +85,12 @@ const Cart = ({ setIsOpen }: CartProps) => {
         address: {
           connect: { id: shippingAddress?.id },
         },
+        payment: {
+          create: {
+            change: change,
+            type: type,
+          },
+        },
       });
 
       clearCart();
@@ -99,7 +110,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
       <div className="flex h-full flex-col py-5">
         {products.length > 0 ? (
           <>
-            <div className=" flex-auto space-y-4 overflow-y-auto [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block ">
+            <div className=" mb-7 flex-auto  space-y-4 [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block ">
               {products.map((product) => (
                 <CartItem key={product.id} cartProduct={product} />
               ))}
@@ -110,71 +121,120 @@ const Cart = ({ setIsOpen }: CartProps) => {
             <h2 className="my-2 text-base font-semibold">
               Endereço de entrega
             </h2>
-            {shippingAddress ? (
+            {data?.user?.adresses ? (
               <>
-                <Collapsible open={collapsibleOpen}>
-                  <CollapsibleTrigger
-                    onClick={() => setCollapsibleOpen(!collapsibleOpen)}
-                  >
-                    <div className="mb-2 flex cursor-pointer items-center justify-between rounded-lg py-2 hover:bg-muted">
-                      <div className="flex items-center gap-2">
-                        <div className="text-primary">
-                          <MapPin size={24} />
+                {shippingAddress ? (
+                  <>
+                    <Collapsible open={collapsibleOpen}>
+                      <CollapsibleTrigger
+                        onClick={() => setCollapsibleOpen(!collapsibleOpen)}
+                      >
+                        <div className="mb-2 flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg py-2 hover:bg-background">
+                          <div className="flex w-full items-center gap-2">
+                            <div className="text-primary">
+                              <MapPin size={24} />
+                            </div>
+                            <p className="line-clamp-1">
+                              {shippingAddress.street}, {shippingAddress.number}{" "}
+                              - {shippingAddress.city} - {shippingAddress.state}
+                            </p>
+                          </div>
+
+                          <div className="text-primary">
+                            <ChevronRight size={24} />
+                          </div>
                         </div>
-                        <p className="line-clamp-1">
-                          {shippingAddress.street},{shippingAddress.number} -{" "}
-                          {shippingAddress.city} - {shippingAddress.state}
-                        </p>
-                      </div>
+                      </CollapsibleTrigger>
 
-                      <div className="text-primary">
-                        <ChevronRight size={24} />
-                      </div>
-                    </div>
-                  </CollapsibleTrigger>
-
-                  <CollapsibleContent>
-                    <div className="my-2 h-fit rounded-lg border border-muted py-2">
-                      <div onClick={() => setCollapsibleOpen(false)}>
-                        {data?.user.adresses.map((address) => (
-                          <AddressArea address={address} key={address.id} />
-                        ))}
-                      </div>
-                    </div>
-                  </CollapsibleContent>
-                </Collapsible>
+                      <CollapsibleContent>
+                        <div className=" h-fit border-b border-muted py-2">
+                          <div onClick={() => setCollapsibleOpen(false)}>
+                            {data?.user.adresses.map((address) => (
+                              <AddressArea address={address} key={address.id} />
+                            ))}
+                          </div>
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  </>
+                ) : (
+                  <>
+                    <Collapsible>
+                      <CollapsibleTrigger className="w-full">
+                        <div className="flex w-full items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="text-primary">
+                              <MapPin />
+                            </span>
+                            <p className="text-base font-medium">
+                              Selecione um endereço
+                            </p>
+                          </div>
+                          <span className="text-primary">
+                            <ChevronRight />
+                          </span>
+                        </div>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <div className="my-2 h-fit rounded-lg border border-muted py-2">
+                          <div>
+                            {data?.user.adresses.map((address) => (
+                              <AddressArea address={address} key={address.id} />
+                            ))}
+                          </div>
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  </>
+                )}
               </>
             ) : (
-              <>
-                <Collapsible>
-                  <CollapsibleTrigger className="w-full">
-                    <div className="flex w-full items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-primary">
-                          <MapPin />
-                        </span>
-                        <p className="text-base font-medium">
-                          Selecione um endereço
-                        </p>
-                      </div>
-                      <span className="text-primary">
-                        <ChevronRight />
-                      </span>
-                    </div>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <div className="my-2 h-fit rounded-lg border border-muted py-2">
-                      <div>
-                        {data?.user.adresses.map((address) => (
-                          <AddressArea address={address} key={address.id} />
-                        ))}
-                      </div>
-                    </div>
-                  </CollapsibleContent>
-                </Collapsible>
-              </>
+              <p className="py-4 text-sm font-medium">
+                Você não tem nenhum endereço cadastrado.
+              </p>
             )}
 
+            <Separator />
+
+            <div className="my-4">
+              <p className="my-2 text-base font-semibold">
+                Metódo de pagamento
+              </p>
+              <div>
+                <div className="flex gap-2 ">
+                  <Button
+                    variant={"ghost"}
+                    onClick={() => setType("cash")}
+                    className={`${type === "cash" ? "bg-primary text-white" : "bg-background"} flex items-center gap-2 hover:bg-primary hover:text-white`}
+                  >
+                    <Banknote /> <span>Dinheiro</span>
+                  </Button>
+                  <Button
+                    variant={"ghost"}
+                    onClick={() => setType("card")}
+                    className={`${type === "card" ? "bg-primary text-white " : "bg-background"} flex items-center gap-2  hover:bg-primary hover:text-white`}
+                  >
+                    <CreditCard /> <span>Cartão</span>
+                  </Button>
+                </div>
+                {type === "cash" && (
+                  <div className="my-4 flex flex-col gap-y-2">
+                    <label htmlFor="troco" className="text-sm font-semibold">
+                      Troco:
+                    </label>
+                    <Input
+                      type="text"
+                      placeholder="0,00"
+                      id="troco"
+                      value={change}
+                      onChange={(e) => setChange(e.target.value)}
+                      maskType="money"
+                      className="border-none "
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
             <Separator />
 
             {/* TOTAIS */}
@@ -271,7 +331,9 @@ const Cart = ({ setIsOpen }: CartProps) => {
             <AlertDialogFooter>
               <AlertDialogCancel>Cancelar</AlertDialogCancel>
               <AlertDialogAction
-                onClick={() => router.push(`/login?callbackUrl=${pathName}`)}
+                onClick={() =>
+                  router.push(`/login/signIn?callbackUrl=${pathName}`)
+                }
                 disabled={isSubmitLoading}
               >
                 {isSubmitLoading && (

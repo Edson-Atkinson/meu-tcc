@@ -24,6 +24,7 @@ const MyOrdersPage = async () => {
         },
       },
       address: true,
+      payment: true,
     },
     orderBy: {
       createdAt: "desc",

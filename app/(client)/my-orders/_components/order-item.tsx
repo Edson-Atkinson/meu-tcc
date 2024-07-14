@@ -12,6 +12,7 @@ import { ChevronRightIcon, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
+import { Banknote, CreditCard } from "lucide-react";
 
 interface OrderItemProps {
   order: Prisma.OrderGetPayload<{
@@ -23,6 +24,7 @@ interface OrderItemProps {
         };
       };
       address: true;
+      payment: true;
     };
   }>;
 }
@@ -39,6 +41,15 @@ const getOrderStatusLabel = (status: string) => {
       return "Em Transporte";
     case "PREPARING":
       return "Preparando";
+  }
+};
+
+const getOrderPaymentLabel = (type: string) => {
+  switch (type) {
+    case "card":
+      return "Cartão";
+    case "cash":
+      return "Dinheiro";
   }
 };
 
@@ -139,6 +150,19 @@ const OrderItem = ({ order }: OrderItemProps) => {
           </div>
         </div>
 
+        <div className="py-3">
+          <Separator />
+        </div>
+        <div className=" text-xs font-medium">
+          <div className="flex items-center gap-2 text-muted-foreground">
+            {order.payment?.type === "cash" ? <Banknote /> : <CreditCard />}
+            {getOrderPaymentLabel(order.payment?.type!)}
+          </div>
+          <div className="flex gap-2 text-muted-foreground ">
+            {order.payment?.type === "cash" && <span>Troco para:</span>}
+            {order.payment?.change}
+          </div>
+        </div>
         <div className="py-3">
           <Separator />
         </div>

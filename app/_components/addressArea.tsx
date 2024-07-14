@@ -31,7 +31,7 @@ const AddressArea = ({ address }: AddressAreaProps) => {
           <MapPin size={24} />
         </div>
         <p className="line-clamp-1">
-          {address.street},{address.number} - {address.city} - {address.state}
+          {address.street}, {address.number} - {address.city} - {address.state}
         </p>
       </div>
     </>
