@@ -153,6 +153,15 @@ model Order {
   status              String         @default("CONFIRMED")
   address             Address?       @relation(fields: [addressId], references: [id])
   addressId           String?
+  payment             Payment?
+}
+
+model Payment {
+  id      String @id @default(uuid())
+  type    String @default("card")
+  change  String @default("00,00")
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String @unique
 }
 
 model Address {
