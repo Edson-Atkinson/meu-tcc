@@ -6,6 +6,9 @@ import { Button } from "@/app/_components/ui/button";
 import { SignInForm } from "@/app/_components/auth/signin-form";
 
 import { isLogged } from "@/app/utils";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/_lib/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Fazer Login",
@@ -21,6 +24,11 @@ interface Props {
 
 export default async function SignInPage({ searchParams }: Props) {
   await isLogged(searchParams.callbackUrl as string);
+
+  const session = await getServerSession(authOptions);
+  if (session) {
+    redirect("/");
+  }
 
   return (
     <>

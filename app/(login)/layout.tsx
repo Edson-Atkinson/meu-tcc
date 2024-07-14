@@ -5,10 +5,6 @@ import "@/app/globals.css";
 import { Toaster } from "sonner";
 import { Toaster as Toaster2 } from "@/app/_components/ui/toaster";
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "../_lib/auth";
-import { redirect } from "next/navigation";
-
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
@@ -24,10 +20,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
-  if (session) {
-    redirect("/");
-  }
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={poppins.className}>
