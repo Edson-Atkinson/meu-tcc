@@ -23,6 +23,10 @@ export const authOptions: AuthOptions = {
           id: profile.sub,
           name: `${profile.given_name} ${profile.family_name}`,
           isSubscribed: false,
+          restaurants: profile.restaurants,
+          email: profile.email,
+          image: profile.picture,
+          emailVerified: profile.email_verified,
         };
       },
     }),
@@ -51,7 +55,7 @@ export const authOptions: AuthOptions = {
           if (!isPasswordCorrect)
             throw new Error("email ou senha não estão corretos");
 
-          if (!user.emailVerified) throw new Error("EmailNotVerified");
+          // if (!user.emailVerified) throw new Error("EmailNotVerified");
 
           const { password, ...userWithoutPass } = user;
           return userWithoutPass as any;
@@ -60,17 +64,15 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.isSubscribed = user.isSubscribed;
-        token.user = user as any;
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update") {
+        return { ...token, ...session.user };
       }
-      return token;
+
+      return { ...token, ...user };
     },
     async session({ token, session }) {
-      if (session.user) {
-        session.user = token.user;
-      }
+      session.user = token as any;
 
       return session;
     },

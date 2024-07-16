@@ -1,4 +1,4 @@
-import { $Enums, Prisma, User } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session {
