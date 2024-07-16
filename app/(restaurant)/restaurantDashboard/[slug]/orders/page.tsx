@@ -21,6 +21,7 @@ const RestaurantOrdersPage = async ({
         },
         include: {
           address: true,
+          payment: true,
           products: {
             include: {
               product: true,

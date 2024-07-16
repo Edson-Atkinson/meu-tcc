@@ -19,6 +19,7 @@ interface OrderItemProps {
   order: Prisma.OrderGetPayload<{
     include: {
       address: true;
+      payment: true;
       products: {
         include: {
           product: true;
@@ -29,7 +30,6 @@ interface OrderItemProps {
 }
 const OrderItem = ({ order }: OrderItemProps) => {
   const [status, setStatus] = useState(order.status);
-  console.log(status);
 
   const router = useRouter();
 
@@ -59,7 +59,7 @@ const OrderItem = ({ order }: OrderItemProps) => {
       <div className="rounded-t-lg bg-primary p-4 text-sm text-white">
         # {order.id}
       </div>
-      <div className=" relative min-h-[250px] w-full rounded-b-lg  p-4 ">
+      <div className="  min-h-[250px] w-full rounded-b-lg  p-4 ">
         <div>
           <Select onValueChange={setStatus} value={status}>
             <SelectTrigger className="w-full border-none outline-none">
@@ -79,7 +79,7 @@ const OrderItem = ({ order }: OrderItemProps) => {
             </SelectContent>
           </Select>
         </div>
-        <div className="my-6 flex-1 ">
+        <div className="mt-6 flex-1 ">
           {order.products.map((product) => (
             <div key={product.id} className="flex flex-1 items-center gap-2">
               <div className="flex h-5 w-5 items-center justify-center rounded-full bg-muted-foreground">
@@ -92,8 +92,8 @@ const OrderItem = ({ order }: OrderItemProps) => {
               </span>
             </div>
           ))}
-          <div className="my-4">
-            <div className=" py-4 text-muted-foreground">
+          <div className="mt-4">
+            <div className=" text-muted-foreground">
               <p className="py-2 font-semibold">Endereço de entrega</p>
 
               <p>
@@ -107,15 +107,38 @@ const OrderItem = ({ order }: OrderItemProps) => {
               </p>
             </div>
           </div>
-          <div className="absolute bottom-0 left-0 w-full p-4">
-            <Separator className="my-2" />
-            <p className=" font-semibold  text-muted-foreground">
-              Total: {formatCurrency(Number(order.totalPrice))}
-            </p>
-          </div>
         </div>
       </div>
       <Separator />
+      <div>
+        <div className=" p-4 text-muted-foreground">
+          {order?.payment?.type === "cash" && (
+            <>
+              <p className="py-2 font-semibold">Pagamento</p>
+              <p>Dinheiro</p>
+              <div>
+                <p>
+                  Troco: <span>R$ {order.payment.change}</span>
+                </p>
+              </div>
+            </>
+          )}
+
+          {order?.payment?.type === "card" && (
+            <div>
+              <p className="py-2 font-semibold">Pagamento</p>
+              <p>Cartão</p>
+            </div>
+          )}
+        </div>
+      </div>
+      <Separator />
+      <div className=" w-full p-4 ">
+        <p className=" font-semibold  text-muted-foreground">
+          Total: {formatCurrency(Number(order.totalPrice))}
+        </p>
+      </div>
+
       <div className={status === "CONFIRMED" ? "hidden" : "flex px-4 py-2"}>
         <Button className="" onClick={() => handleUpdateStatusOrder(order.id)}>
           Salvar
