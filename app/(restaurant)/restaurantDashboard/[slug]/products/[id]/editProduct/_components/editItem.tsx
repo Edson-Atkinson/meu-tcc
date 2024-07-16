@@ -16,7 +16,6 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { updateProductItem } from "../../../_actions/updateProductItem";
-import { revalidatePath } from "next/cache";
 
 interface FormProps {
   restaurant: Prisma.RestaurantGetPayload<{

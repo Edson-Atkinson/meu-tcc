@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -17,7 +16,6 @@ import { Input } from "@/app/_components/ui/input";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { createCategoryItem } from "../_action/createCategoryItem";
-import { Prisma } from "@prisma/client";
 
 type RestaurantProps = {
   restaurantSlug: string;
