@@ -13,6 +13,7 @@ import {
   ScrollTextIcon,
   ShoppingBag,
   Store,
+  UserRound,
 } from "lucide-react";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -172,6 +173,16 @@ const Header = ({ isInput }: HeaderProps) => {
                     <Link href="/my-favorite-restaurants">
                       <HeartIcon size={16} />
                       <span className="block">Restaurantes Favoritos</span>
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start space-x-3 rounded-full text-sm font-normal hover:bg-primary hover:text-white"
+                    asChild
+                  >
+                    <Link href={`/profile/${data.user.id}`}>
+                      <UserRound size={16} />
+                      <span className="block">Meu perfil</span>
                     </Link>
                   </Button>
                 </>
