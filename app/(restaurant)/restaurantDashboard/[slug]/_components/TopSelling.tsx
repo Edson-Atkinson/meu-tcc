@@ -48,9 +48,9 @@ const TopSelling = async ({ id }: TopSellingProps) => {
         {products.map((product) => (
           <div
             key={product.productId}
-            className="flex items-center justify-between"
+            className="flex items-center justify-between  border-b border-muted"
           >
-            <div className="flex gap-2 border-b border-muted py-2">
+            <div className="flex gap-2 py-2">
               <div className="relative h-[85px] w-[85px]">
                 <Image
                   src={product.image}
@@ -60,20 +60,20 @@ const TopSelling = async ({ id }: TopSellingProps) => {
                   className="rounded-lg object-cover shadow-md"
                 />
               </div>
-              <div>
+              <div className="relative max-w-[125px] md:max-w-[170px] lg:max-w-[125px] xl:max-w-[170px]">
                 <div className="w-fit rounded-3xl border border-primary px-2 py-[2px] text-xs font-bold text-primary">
                   {product.categoryName}
                 </div>
-                <div className="truncate">{product.name}</div>
+                <div className=" truncate">{product.name}</div>
                 <div className="flex items-center gap-2">
-                  <div className="text-lg font-bold">
+                  <div className="text-sm font-bold  xl:text-lg">
                     {formatCurrency(
                       Number(product.price) -
                         Number(product.price) * (product.discount / 100),
                     )}
                   </div>
                   {product.discount > 0 && (
-                    <span className="text-sm font-semibold text-muted-foreground line-through">
+                    <span className=" text-xs font-semibold text-muted-foreground line-through xl:text-sm">
                       {formatCurrency(Number(product.price))}
                     </span>
                   )}
@@ -81,7 +81,7 @@ const TopSelling = async ({ id }: TopSellingProps) => {
               </div>
             </div>
             <div>
-              <h2 className="text-lg font-bold">
+              <h2 className="text-sm font-bold xl:text-lg">
                 {product._sum.quantity} Vendidos
               </h2>
             </div>

@@ -41,7 +41,7 @@ const RestaurantProductPage = async ({
           </Link>
         </div>
 
-        <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
+        <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
           {products?.products.map((item, index) => (
             <RestaurantProductItem key={index} product={item} />
           ))}

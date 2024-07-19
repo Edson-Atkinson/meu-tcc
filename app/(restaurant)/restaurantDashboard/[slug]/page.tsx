@@ -76,7 +76,7 @@ const RestaurantControlPage = async ({
     <div className="w-full px-4 py-4">
       <Totals restaurant={restaurant} />
       <ShowQuantitys restaurant={restaurant} totalVendidos={totalVendidos!} />
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <TopSelling id={restaurant.id} />
         <BestCategories id={restaurant.id} />
       </div>

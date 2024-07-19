@@ -20,6 +20,7 @@ interface OrderItemProps {
     include: {
       address: true;
       payment: true;
+      user: true;
       products: {
         include: {
           product: true;
@@ -92,6 +93,13 @@ const OrderItem = ({ order }: OrderItemProps) => {
               </span>
             </div>
           ))}
+          <div className="my-4">
+            <div className=" text-muted-foreground">
+              <p className="py-2 font-semibold">Usuário</p>
+
+              <p>{order.user.name}</p>
+            </div>
+          </div>
           <div className="mt-4">
             <div className=" text-muted-foreground">
               <p className="py-2 font-semibold">Endereço de entrega</p>

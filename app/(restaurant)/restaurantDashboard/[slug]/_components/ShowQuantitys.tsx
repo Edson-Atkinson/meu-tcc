@@ -62,7 +62,7 @@ const ShowQuantitys = ({ restaurant, totalVendidos }: ShowQuantitysProps) => {
           </span>
           {totalVendidos.orders.length}
         </div>
-        <p>Total de Vendidos</p>
+        <p className=" text-xs lg:text-lg">Total de Vendidos</p>
       </div>
       <div className="flex h-[157px] flex-col items-center justify-center rounded-lg border border-muted">
         <div className="flex items-center gap-2 text-2xl font-bold">
@@ -72,7 +72,7 @@ const ShowQuantitys = ({ restaurant, totalVendidos }: ShowQuantitysProps) => {
           </span>
           {restaurant.orders.length}
         </div>
-        <p>Total de Pedidos</p>
+        <p className=" text-xs lg:text-lg">Total de Pedidos</p>
       </div>
       <div className="flex h-[157px] flex-col items-center justify-center rounded-lg border border-muted">
         <div className="flex items-center gap-2 text-2xl font-bold">
@@ -82,7 +82,7 @@ const ShowQuantitys = ({ restaurant, totalVendidos }: ShowQuantitysProps) => {
           </span>
           {restaurant.products.length}
         </div>
-        <p>Produtos</p>
+        <p className=" text-xs lg:text-lg">Produtos</p>
       </div>
       <div className="flex h-[157px] flex-col items-center justify-center rounded-lg border border-muted">
         <div className="flex items-center gap-2 text-2xl font-bold">
@@ -91,7 +91,7 @@ const ShowQuantitys = ({ restaurant, totalVendidos }: ShowQuantitysProps) => {
           </span>{" "}
           {restaurant.categories.length}
         </div>
-        <p>Categorias</p>
+        <p className=" text-xs lg:text-lg">Categorias</p>
       </div>
     </div>
   );
