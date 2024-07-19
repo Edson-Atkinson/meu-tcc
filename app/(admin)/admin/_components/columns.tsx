@@ -151,7 +151,7 @@ export const columns: ColumnDef<UserTable>[] = [
   {
     id: "ações",
     header: "Ações",
-    cell: ({ row }) => {
+    cell: function Cell({ row }) {
       const id = row.original;
       const [openAlert, setOpenAlert] = useState(false);
       return (
