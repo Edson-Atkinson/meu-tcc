@@ -120,31 +120,35 @@ export function ResetPasswordForm({ jwtUserId }: Props) {
                       <Icons.key
                         className={`${form.formState.errors.password ? "text-destructive" : "text-muted-foreground"} `}
                       />
-                      <Input
-                        type={isVisiblePass ? "text" : "password"}
-                        placeholder="Sua nova senha"
-                        className={`${form.formState.errors.password && "border-destructive bg-destructive/30"}`}
+                      <div
+                        className={`${form.formState.errors.password && "border-destructive bg-destructive/30"} focus-visible::ring-transparent relative flex w-full items-center gap-2 rounded-lg border-muted bg-background px-2`}
                         {...field}
-                      />
-                      {isVisiblePass ? (
-                        <Icons.eyeOff
-                          onClick={toggleVisblePass}
-                          className={`${
-                            form.formState.errors.password
-                              ? "text-destructive"
-                              : "text-muted-foreground"
-                          } `}
+                      >
+                        <Input
+                          type={isVisiblePass ? "text" : "password"}
+                          placeholder="Sua senha"
+                          className={` border-none bg-transparent focus-visible:ring-transparent focus-visible:ring-offset-0`}
                         />
-                      ) : (
-                        <Icons.eye
-                          onClick={toggleVisblePass}
-                          className={`${
-                            form.formState.errors.password
-                              ? "text-destructive"
-                              : "text-muted-foreground"
-                          } `}
-                        />
-                      )}
+                        {isVisiblePass ? (
+                          <Icons.eyeOff
+                            onClick={toggleVisblePass}
+                            className={`${
+                              form.formState.errors.password
+                                ? "text-destructive"
+                                : "text-muted-foreground"
+                            } `}
+                          />
+                        ) : (
+                          <Icons.eye
+                            onClick={toggleVisblePass}
+                            className={`${
+                              form.formState.errors.password
+                                ? "text-destructive"
+                                : "text-muted-foreground"
+                            } `}
+                          />
+                        )}
+                      </div>
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -153,7 +157,20 @@ export function ResetPasswordForm({ jwtUserId }: Props) {
             />
           </div>
 
-          <PasswordStrength passStrength={passStrength} />
+          {passStrength > 0 && (
+            <div className="flex w-full items-center justify-end gap-2">
+              <div className="flex items-center justify-end gap-2">
+                <span className="text-xs font-semibold text-muted-foreground">
+                  Nivel da senha:
+                </span>
+
+                <PasswordStrength
+                  passStrength={passStrength}
+                  className="   w-[130px]  "
+                />
+              </div>
+            </div>
+          )}
 
           <div className="grid gap-1">
             <FormField
@@ -171,9 +188,9 @@ export function ResetPasswordForm({ jwtUserId }: Props) {
                         } `}
                       />
                       <Input
-                        type="password"
-                        placeholder="Confirme sua nova senha"
-                        className={`${form.formState.errors.confirmPassword && "border-destructive bg-destructive/30"}`}
+                        type={isVisiblePass ? "text" : "password"}
+                        placeholder="Confirme sua senha"
+                        className={`${form.formState.errors.confirmPassword && "border-destructive bg-destructive/30"} border-none focus-visible:ring-transparent`}
                         {...field}
                       />
                     </div>

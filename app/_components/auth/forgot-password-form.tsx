@@ -77,7 +77,7 @@ export function ForgotPasswordForm() {
                     <Input
                       type="email"
                       placeholder="Seu email"
-                      className={`${form.formState.errors.email && "border-destructive bg-destructive/30"}`}
+                      className={`${form.formState.errors.email && "border-destructive bg-destructive/30"} border-none`}
                       {...field}
                     />
                   </div>
