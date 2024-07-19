@@ -7,6 +7,7 @@ interface RestaurantOrdersPageProps {
     slug: string;
   };
 }
+
 const RestaurantOrdersPage = async ({
   params: { slug },
 }: RestaurantOrdersPageProps) => {
@@ -22,6 +23,7 @@ const RestaurantOrdersPage = async ({
         include: {
           address: true,
           payment: true,
+          user: true,
           products: {
             include: {
               product: true,
