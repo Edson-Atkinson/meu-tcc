@@ -126,7 +126,7 @@ const Form = (
             <label htmlFor="discount">Porcentagem de Desconto:</label>
             <Input
               id="discount"
-              type=""
+              type="number"
               value={discountPercentage}
               onChange={(e) => setDiscountPercentage(Number(e.target.value))}
               className=" border-none  outline-none"
