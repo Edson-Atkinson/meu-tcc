@@ -131,7 +131,7 @@ const CategoryItem = ({ category }: CategoryListProps) => {
       </AlertDialog>
 
       <AlertDialog open={alertEditDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="w-[90%]">
           <AlertDialogHeader>
             <AlertDialogTitle>
               Você deseja mesmo editar essa categoria?
@@ -156,7 +156,7 @@ const CategoryItem = ({ category }: CategoryListProps) => {
       </AlertDialog>
 
       <Dialog open={editDialogOpen}>
-        <DialogContent className="">
+        <DialogContent className="w-[90%]">
           <DialogHeader>
             <DialogTitle>Editar categoria</DialogTitle>
           </DialogHeader>

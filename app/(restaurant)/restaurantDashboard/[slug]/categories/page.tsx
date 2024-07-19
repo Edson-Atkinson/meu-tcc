@@ -25,7 +25,7 @@ const CategoryRestaurantPage = async ({
   });
 
   return (
-    <div>
+    <div className="px-4">
       <div className="flex items-center justify-between py-4">
         <h2 className="text-xl font-bold">Categorias</h2>
         <NewCategoryItem restaurantSlug={slug} />
