@@ -40,6 +40,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/_components/ui/select";
+import { SlidersHorizontal } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -81,19 +82,19 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div>
-        <div className="flex items-center py-4">
+        <div className="flex items-center gap-2 py-4">
           <Input
-            placeholder="Filter emails..."
+            placeholder="Filtrar por email..."
             value={(table.getColumn("Email")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("Email")?.setFilterValue(event.target.value)
             }
-            className="max-w-sm"
+            className="max-w-sm border-none"
           />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto">
-                Colunas
+              <Button variant="default" className="ml-auto">
+                <SlidersHorizontal />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -168,12 +169,12 @@ export function DataTable<TData, TValue>({
           </Table>
         </div>
       </div>
-      <div className="my-4 flex items-center justify-between px-2">
+      <div className="my-4 flex flex-col items-center justify-between  gap-2 px-2 lg:flex-row">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} de{" "}
           {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
         </div>
-        <div className="flex items-center space-x-6 lg:space-x-8">
+        <div className="flex flex-col items-center gap-2 space-x-6 lg:flex-row lg:space-x-8">
           <div className="flex items-center space-x-2">
             <p className="text-sm font-medium">Linhas por página</p>
             <Select
@@ -182,13 +183,13 @@ export function DataTable<TData, TValue>({
                 table.setPageSize(Number(value));
               }}
             >
-              <SelectTrigger className="h-8 w-[70px]">
+              <SelectTrigger className="h-8 w-[70px] border-none">
                 <SelectValue
                   placeholder={table.getState().pagination.pageSize}
                 />
               </SelectTrigger>
               <SelectContent side="top">
-                {[5, 10, 20, 30, 40, 50].map((pageSize) => (
+                {[2, 10, 20, 30, 40, 50].map((pageSize) => (
                   <SelectItem key={pageSize} value={`${pageSize}`}>
                     {pageSize}
                   </SelectItem>
@@ -196,13 +197,13 @@ export function DataTable<TData, TValue>({
               </SelectContent>
             </Select>
           </div>
-          <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+          <div className="my-2 flex w-[100px] items-center justify-center text-sm font-medium">
             Página {table.getState().pagination.pageIndex + 1} de{" "}
             {table.getPageCount()}
           </div>
           <div className="flex items-center space-x-2">
             <Button
-              variant="outline"
+              variant="ghost"
               className="hidden h-8 w-8 p-0 lg:flex"
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
@@ -211,8 +212,8 @@ export function DataTable<TData, TValue>({
               <FiChevronsLeft className="h-4 w-4" />
             </Button>
             <Button
-              variant="outline"
-              className="h-8 w-8 p-0"
+              variant="default"
+              className="h-8 w-8 p-0 hover:bg-primary hover:text-white"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
@@ -220,7 +221,7 @@ export function DataTable<TData, TValue>({
               <FaChevronLeft className="h-4 w-4" />
             </Button>
             <Button
-              variant="outline"
+              variant="default"
               className="h-8 w-8 p-0"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
@@ -229,7 +230,7 @@ export function DataTable<TData, TValue>({
               <FaChevronRight className="h-4 w-4" />
             </Button>
             <Button
-              variant="outline"
+              variant="ghost"
               className="hidden h-8 w-8 p-0 lg:flex"
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
