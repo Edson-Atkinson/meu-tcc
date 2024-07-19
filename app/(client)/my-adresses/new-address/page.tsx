@@ -65,7 +65,7 @@ const NewAddressPage = () => {
         </div>
       </div>
       <div className="flex  flex-col p-4 md:m-auto md:mb-4 md:max-w-[500px] md:rounded-lg md:border md:border-muted">
-        <h2 className="pb-2 text-center text-sm font-semibold md:text-lg">
+        <h2 className="pb-2 text-center text-lg font-semibold ">
           Novo Endereço
         </h2>
         <form action="" className="mb-4 flex-1 space-y-4">
@@ -92,9 +92,10 @@ const NewAddressPage = () => {
               <label htmlFor="number">Numero:</label>
               <Input
                 id="number"
+                type="number"
                 value={number}
                 onChange={(e) => setNumber(Number(e.target.value))}
-                className="border-none outline-none"
+                className="w-[100px] border-none outline-none"
               />
             </div>
           </div>
