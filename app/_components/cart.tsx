@@ -54,6 +54,9 @@ const Cart = ({ setIsOpen }: CartProps) => {
   const { shippingAddress } = useAppContext();
   const handleFinishOrderClick = async () => {
     if (!data?.user) return;
+    if (!shippingAddress) return toast.error("Escolha um endereço");
+    if (!change || change === "")
+      return toast.error("Preencha o campo de troco");
 
     const restaurant = products[0].restaurant;
 
@@ -224,11 +227,12 @@ const Cart = ({ setIsOpen }: CartProps) => {
                     <Input
                       type="text"
                       placeholder="0,00"
+                      required
                       id="troco"
                       value={change}
                       onChange={(e) => setChange(e.target.value)}
                       maskType="money"
-                      className="border-none "
+                      className="border-none"
                     />
                   </div>
                 )}
@@ -282,6 +286,11 @@ const Cart = ({ setIsOpen }: CartProps) => {
               onClick={() => setIsConfirmDialogOpen(true)}
               disabled={isSubmitLoading}
             >
+              {isSubmitLoading && (
+                <span className="animate-spin">
+                  <Loader2 size={16} />
+                </span>
+              )}
               Finalizar pedido
             </Button>
           </>
@@ -310,7 +319,9 @@ const Cart = ({ setIsOpen }: CartProps) => {
                 disabled={isSubmitLoading}
               >
                 {isSubmitLoading && (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <span className="animate-spin">
+                    <Loader2 size={16} />
+                  </span>
                 )}
                 Finalizar
               </AlertDialogAction>
