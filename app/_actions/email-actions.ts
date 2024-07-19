@@ -5,7 +5,7 @@ import React from "react";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-resend.domains.create({ name: "edson.atk@gmail.com" });
+// resend.domains.create({ name: "edson.atk@gmail.com" });
 
 interface Email {
   to: string[];
@@ -15,7 +15,7 @@ interface Email {
 
 export const sendEmail = async (payload: Email) => {
   const { error } = await resend.emails.send({
-    from: "My Delivery <onboarding@resend.dev>",
+    from: "My Delivery <suporte@mydelivery.app.br>",
     ...payload,
   });
 
