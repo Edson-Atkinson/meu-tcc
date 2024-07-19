@@ -3,6 +3,18 @@ import AuthProvider from "@/app/_providers/auth";
 import { Poppins } from "next/font/google";
 import "@/app/globals.css";
 import { Toaster } from "sonner";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/_lib/auth";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/app/_components/ui/alert-dialog";
+import Link from "next/link";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -19,6 +31,38 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
+  if (
+    !session ||
+    session?.user.role === "USER" ||
+    session?.user.active === false
+  ) {
+    return (
+      <html lang="en" suppressHydrationWarning>
+        <body className={poppins.className}>
+          <AuthProvider>
+            <div className="h-full w-full bg-slate-600">
+              <AlertDialog open>
+                <AlertDialogContent className="w-[90%] rounded-lg">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Acesso negado!</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Você não tem permição para acessar essa área do sistema!
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogAction>
+                      <Link href={"/"}>Ok</Link>
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          </AuthProvider>
+        </body>
+      </html>
+    );
+  }
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={poppins.className}>
