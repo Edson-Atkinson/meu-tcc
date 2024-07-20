@@ -66,6 +66,23 @@ const handleDeleteUser = async (user: UserTable) => {
     toast.success("Usuário deletado com sucesso!");
   }
 };
+
+const handleUpdateUser = async (value: $Enums.Role, user: UserTable) => {
+  const handleUpdateUserType = async (id: string, role: $Enums.Role) => {
+    try {
+      await updateUser(id, {
+        role: role,
+      });
+      toast.success("Usuário alterado com sucesso!");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      window.location.reload();
+    }
+  };
+  handleUpdateUserType(user.id, value);
+};
+
 export const columns: ColumnDef<UserTable>[] = [
   {
     id: "Selecione",
@@ -113,6 +130,36 @@ export const columns: ColumnDef<UserTable>[] = [
     accessorKey: "role",
     header: "Tipo",
     id: "Tipo",
+    cell: function Cell({ row, column: { id } }) {
+      const id2 = row.original;
+      const [role, setRole] = useState("");
+      return (
+        <div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="w-fit text-sm font-normal">
+                <span className="">{row.getValue(id)}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => handleUpdateUser("ADMIN", id2)}>
+                ADMIN
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => handleUpdateUser("USER", id2)}>
+                USER
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => handleUpdateUser("RESTAURANT", id2)}
+              >
+                RESTAURANT
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "email",
@@ -169,7 +216,6 @@ export const columns: ColumnDef<UserTable>[] = [
                 Ativar / Desativar
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Salvar modificações</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setOpenAlert(true)}>
                 Deletar usuário
