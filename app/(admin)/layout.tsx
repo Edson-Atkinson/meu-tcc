@@ -53,7 +53,7 @@ export default async function RootLayout({
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogAction>
-                      <Link href={"/"}>Ok</Link>
+                      <Link href="/">Ok</Link>
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
