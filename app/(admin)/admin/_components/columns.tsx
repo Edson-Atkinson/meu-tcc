@@ -64,6 +64,7 @@ const handleDeleteUser = async (user: UserTable) => {
     console.log(error);
   } finally {
     toast.success("Usuário deletado com sucesso!");
+    window.location.reload();
   }
 };
 
@@ -223,7 +224,7 @@ export const columns: ColumnDef<UserTable>[] = [
             </DropdownMenuContent>
           </DropdownMenu>
           <AlertDialog open={openAlert}>
-            <AlertDialogContent className="w-[90%]">
+            <AlertDialogContent className="w-[90%] rounded-lg">
               <AlertDialogHeader>
                 <AlertDialogTitle>
                   Você tem quer mesmo deletar esse usuário?
