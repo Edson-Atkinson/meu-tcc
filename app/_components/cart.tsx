@@ -201,11 +201,17 @@ const Cart = ({ setIsOpen }: CartProps) => {
                         </div>
                       </CollapsibleTrigger>
                       <CollapsibleContent>
-                        <div className="my-2 h-fit rounded-lg border border-muted py-2">
+                        <div className="my-2 h-fit rounded-lg ">
                           <div>
                             {users?.adresses?.map((address) => (
                               <AddressArea address={address} key={address.id} />
                             ))}
+                            {users.adresses.length === 0 && (
+                              <p className="text-sm font-medium">
+                                Você ainda não possuí nenhum endereço
+                                cadastrado!
+                              </p>
+                            )}
                           </div>
                         </div>
                       </CollapsibleContent>
