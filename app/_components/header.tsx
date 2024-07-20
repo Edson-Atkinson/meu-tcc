@@ -209,14 +209,14 @@ const Header = ({ isInput }: HeaderProps) => {
                   </Button>
                 </>
               )}
-              {users?.restaurants && (
+              {users?.restaurants.length! > 0 && (
                 <Button
                   variant="ghost"
                   className="w-full justify-start space-x-3 rounded-full text-sm font-normal hover:bg-primary hover:text-white"
                   asChild
                 >
                   <Link
-                    href={`/restaurantDashboard/${users?.restaurants[0].slug}`}
+                    href={`/restaurantDashboard/${users?.restaurants[0]?.slug}`}
                   >
                     <Store size={16} />
                     <span className="block">Vendedor </span>
