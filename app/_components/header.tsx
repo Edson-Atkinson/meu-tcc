@@ -41,27 +41,6 @@ const Header = ({ isInput }: HeaderProps) => {
   const handleSignOutClick = () => signOut();
   const handleSignInClick = () => signIn();
 
-  const [users, setUsers] = useState<UserRestaurants>();
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(`/api/getRestaurants`);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
-  console.log(users);
-
   return (
     <div className="flex h-[80px] items-center justify-between border-b border-[#eeeeee] px-5 py-6">
       <Link href="/">
@@ -209,14 +188,14 @@ const Header = ({ isInput }: HeaderProps) => {
                   </Button>
                 </>
               )}
-              {users?.restaurants.length! > 0 && (
+              {data?.user?.restaurants.length! > 0 && (
                 <Button
                   variant="ghost"
                   className="w-full justify-start space-x-3 rounded-full text-sm font-normal hover:bg-primary hover:text-white"
                   asChild
                 >
                   <Link
-                    href={`/restaurantDashboard/${users?.restaurants[0]?.slug}`}
+                    href={`/restaurantDashboard/${data?.user?.restaurants[0]?.slug}`}
                   >
                     <Store size={16} />
                     <span className="block">Vendedor </span>
