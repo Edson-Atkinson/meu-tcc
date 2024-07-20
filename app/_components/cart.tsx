@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../_context/cart";
 import CartItem from "./cart-item";
 import { Card, CardContent } from "./ui/card";
@@ -30,6 +30,7 @@ import {
 } from "@/app/_components/ui/collapsible";
 import AddressArea from "./addressArea";
 import { Input } from "./ui/input";
+import { UserAdresses } from "../_types/userAdresses";
 
 interface CartProps {
   // eslint-disable-next-line no-unused-vars
@@ -51,11 +52,33 @@ const Cart = ({ setIsOpen }: CartProps) => {
   const { products, subtotalPrice, totalPrice, totalDiscounts, clearCart } =
     useContext(CartContext);
 
+  const [users, setUsers] = useState<UserAdresses>();
+  // const userAdresses = getUserAdresses(data?.user.id!, pathName)
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch(`/api/getUser`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  console.log(users);
+
   const { shippingAddress } = useAppContext();
   const handleFinishOrderClick = async () => {
     if (!data?.user) return;
     if (!shippingAddress) return toast.error("Escolha um endereço");
-    if (!change || change === "")
+    if (type === "cash" && change === "")
       return toast.error("Preencha o campo de troco");
 
     const restaurant = products[0].restaurant;
@@ -123,7 +146,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
             <h2 className="my-2 text-base font-semibold">
               Endereço de entrega
             </h2>
-            {data?.user?.adresses ? (
+            {users?.adresses ? (
               <>
                 {shippingAddress ? (
                   <>
@@ -151,7 +174,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
                       <CollapsibleContent>
                         <div className=" h-fit border-b border-muted py-2">
                           <div onClick={() => setCollapsibleOpen(false)}>
-                            {data?.user.adresses.map((address) => (
+                            {users?.adresses?.map((address) => (
                               <AddressArea address={address} key={address.id} />
                             ))}
                           </div>
@@ -180,7 +203,7 @@ const Cart = ({ setIsOpen }: CartProps) => {
                       <CollapsibleContent>
                         <div className="my-2 h-fit rounded-lg border border-muted py-2">
                           <div>
-                            {data?.user.adresses.map((address) => (
+                            {users?.adresses?.map((address) => (
                               <AddressArea address={address} key={address.id} />
                             ))}
                           </div>
