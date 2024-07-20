@@ -27,9 +27,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Separator } from "./ui/separator";
 import Search from "./search";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Cart from "./cart";
-import { UserRestaurants } from "../_types/userRestaurants";
 
 interface HeaderProps {
   isInput?: boolean;
