@@ -72,8 +72,6 @@ const Cart = ({ setIsOpen }: CartProps) => {
     fetchUsers();
   }, []);
 
-  console.log(users);
-
   const { shippingAddress } = useAppContext();
   const handleFinishOrderClick = async () => {
     if (!data?.user) return;

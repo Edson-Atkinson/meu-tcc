@@ -60,7 +60,6 @@ const Header = ({ isInput }: HeaderProps) => {
 
     fetchUsers();
   }, []);
-  console.log(users);
 
   return (
     <div className="flex h-[80px] items-center justify-between border-b border-[#eeeeee] px-5 py-6">
