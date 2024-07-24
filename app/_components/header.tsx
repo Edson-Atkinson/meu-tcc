@@ -27,8 +27,9 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Separator } from "./ui/separator";
 import Search from "./search";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cart from "./cart";
+import { UserRestaurants } from "../_types/userRestaurants";
 
 interface HeaderProps {
   isInput?: boolean;
@@ -39,6 +40,26 @@ const Header = ({ isInput }: HeaderProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const handleSignOutClick = () => signOut();
   const handleSignInClick = () => signIn();
+
+  const [users, setUsers] = useState<UserRestaurants>();
+  // const userAdresses = getUserAdresses(data?.user.id!, pathName)
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch(`/api/getRestaurants`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   return (
     <div className="flex h-[80px] items-center justify-between border-b border-[#eeeeee] px-5 py-6">
@@ -187,14 +208,14 @@ const Header = ({ isInput }: HeaderProps) => {
                   </Button>
                 </>
               )}
-              {data?.user?.restaurants.length! > 0 && (
+              {users?.role === "RESTAURANT" && (
                 <Button
                   variant="ghost"
                   className="w-full justify-start space-x-3 rounded-full text-sm font-normal hover:bg-primary hover:text-white"
                   asChild
                 >
                   <Link
-                    href={`/restaurantDashboard/${data?.user?.restaurants[0]?.slug}`}
+                    href={`/restaurantDashboard/${users?.restaurants[0]?.slug}`}
                   >
                     <Store size={16} />
                     <span className="block">Vendedor </span>
